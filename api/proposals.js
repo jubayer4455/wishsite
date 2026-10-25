@@ -152,7 +152,6 @@ module.exports = async function handler(req, res) {
         res.setHeader('Content-Type', 'application/json');
         return res.end(JSON.stringify({ ok: Boolean(stRecord), proposal: stRecord }));
       } else {
-        // Listing all proposals is strictly restricted to the Admin!
         if (adminKey !== ADMIN_PASSWORD) {
           res.statusCode = 403;
           res.setHeader('Content-Type', 'application/json');
@@ -163,7 +162,6 @@ module.exports = async function handler(req, res) {
         const stData = idxRes.status === 200 ? await idxRes.json() : { proposals: [] };
         const stList = Array.isArray(stData.proposals) ? stData.proposals : [];
 
-        // Merge pgList and stList by id
         const map = new Map();
         stList.forEach(item => { if (item && item.id) map.set(item.id, item); });
         if (Array.isArray(pgList)) {
@@ -213,6 +211,7 @@ module.exports = async function handler(req, res) {
       const pid = (body.id || Math.random().toString(36).slice(2, 10)).trim();
       const record = {
         id: pid,
+        mode: (body.mode || 'proposal').trim(),
         to_name: (body.to_name || '').trim().slice(0, 40),
         from_name: (body.from_name || '').trim().slice(0, 40),
         whatsapp: (body.whatsapp || '').replace(/\D/g, ''),
@@ -235,6 +234,7 @@ module.exports = async function handler(req, res) {
         dress_code: (body.dress_code || '').trim().slice(0, 120),
         reply_note: (body.reply_note || '').trim().slice(0, 300),
         summary_text: body.summary_text || '',
+        payload: body.payload && typeof body.payload === 'object' ? body.payload : {},
         created_at: now,
         opened_at: null,
         accepted_at: null,
@@ -263,6 +263,7 @@ module.exports = async function handler(req, res) {
       if (!existing) {
         existing = {
           id: pid,
+          mode: body.mode || 'proposal',
           to_name: (body.to_name || '').trim().slice(0, 40),
           from_name: (body.from_name || '').trim().slice(0, 40),
           whatsapp: (body.whatsapp || '').replace(/\D/g, ''),
@@ -285,6 +286,7 @@ module.exports = async function handler(req, res) {
           dress_code: '',
           reply_note: '',
           summary_text: '',
+          payload: {},
           created_at: now,
           opened_at: null,
           accepted_at: null,
@@ -298,8 +300,16 @@ module.exports = async function handler(req, res) {
         ? body.status
         : existing.status;
 
+      const nextPayload = { ...(existing.payload || {}), ...(body.payload || {}) };
+      if (body.append_entry) {
+        const entries = Array.isArray(nextPayload.entries) ? [...nextPayload.entries] : [];
+        entries.unshift({ ...body.append_entry, at: now });
+        nextPayload.entries = entries.slice(0, 100);
+      }
+
       const updated = {
         ...existing,
+        mode: body.mode !== undefined ? body.mode : (existing.mode || 'proposal'),
         to_name: body.to_name !== undefined ? body.to_name : existing.to_name,
         from_name: body.from_name !== undefined ? body.from_name : existing.from_name,
         whatsapp: body.whatsapp !== undefined ? body.whatsapp : existing.whatsapp,
@@ -322,6 +332,7 @@ module.exports = async function handler(req, res) {
         dress_code: body.dress_code !== undefined ? body.dress_code : (existing.dress_code || ''),
         reply_note: body.reply_note !== undefined ? body.reply_note : (existing.reply_note || ''),
         summary_text: body.summary_text !== undefined ? body.summary_text : existing.summary_text,
+        payload: nextPayload,
         opened_at: existing.opened_at || (body.status === 'opened' ? now : null),
         accepted_at: existing.accepted_at || (body.status === 'accepted' ? now : null),
         confirmed_at: body.status === 'confirmed' ? now : existing.confirmed_at,
