@@ -45,7 +45,7 @@ main{position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex
 /* Smooth Card Animation */
 .card{
   position:relative;background:var(--card-bg);backdrop-filter:blur(10px);
-  border-radius:28px;padding:26px 20px;width:100%;max-width:440px;text-align:center;
+  border-radius:28px;padding:24px 20px;width:100%;max-width:450px;text-align:center;
   box-shadow:0 20px 50px rgba(225,29,72,.18);border:1px solid var(--border);overflow:hidden;
   animation:cardEnter .35s cubic-bezier(.22,1,.36,1) both;
 }
@@ -53,16 +53,32 @@ main{position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex
   from{opacity:0;transform:translateY(16px) scale(.98)}
   to{opacity:1;transform:translateY(0) scale(1)}
 }
-#ask{min-height:380px;display:flex;flex-direction:column;justify-content:center}
+#ask,#sorryCard{min-height:390px;display:flex;flex-direction:column;justify-content:center}
 .card.wide{max-width:740px}
-.big{font-size:48px;line-height:1;margin-bottom:6px;animation:beat 1.4s infinite}
+.big{font-size:46px;line-height:1;margin-bottom:6px;animation:beat 1.4s infinite}
 @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-h1{font-size:23px;margin:6px 0 8px;line-height:1.3;word-break:break-word}
-p{margin:6px 0;color:var(--mute);font-size:15px}
+h1{font-size:22px;margin:6px 0 6px;line-height:1.3;word-break:break-word}
+p{margin:5px 0;color:var(--mute);font-size:14.5px}
+
+/* Clean 2x2 Segmented Mode Switcher */
+.mode-switcher{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:7px;
+  background:var(--soft);padding:6px;border-radius:18px;border:1.5px solid var(--border);
+  margin-bottom:14px;
+}
+.mode-tab{
+  border:0;background:transparent;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;
+  padding:9px 8px;border-radius:13px;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+.mode-tab.active{
+  background:var(--btn-grad);color:#fff;box-shadow:0 4px 12px rgba(225,29,72,.28);
+}
+.mode-pane{animation:stepSlide .25s ease both;text-align:left}
 
 /* Buttons */
 .btn{
-  border:0;border-radius:16px;padding:13px 26px;font:inherit;font-weight:700;font-size:17px;
+  border:0;border-radius:16px;padding:13px 24px;font:inherit;font-weight:700;font-size:17px;
   cursor:pointer;color:#fff;background:var(--btn-grad);box-shadow:0 8px 20px rgba(225,29,72,.3);
   transition:transform .18s,box-shadow .18s,opacity .18s;touch-action:manipulation;
 }
@@ -71,17 +87,17 @@ p{margin:6px 0;color:var(--mute);font-size:15px}
 .btn.full{width:100%}
 .btn.no{background:#fff;color:#4c0519;box-shadow:0 6px 16px rgba(0,0,0,.14);border:2px solid var(--border);z-index:10;transition:left .2s cubic-bezier(.22,1,.36,1),top .2s cubic-bezier(.22,1,.36,1);touch-action:none;user-select:none}
 .btn.back{background:#fff;color:#4c0519;box-shadow:none;border:2px solid var(--border);font-size:15px;padding:10px 18px;border-radius:14px}
-.btn.sm{font-size:15px;padding:10px 18px;border-radius:14px}
-.btn.outline{background:var(--soft);color:var(--r);border:2px solid var(--border);box-shadow:0 4px 12px rgba(225,29,72,.08);font-size:15px;padding:11px 20px;border-radius:14px}
+.btn.sm{font-size:14.5px;padding:9px 16px;border-radius:13px}
+.btn.outline{background:var(--soft);color:var(--r);border:2px solid var(--border);box-shadow:0 4px 12px rgba(225,29,72,.08);font-size:15px;padding:11px 18px;border-radius:14px}
 .mbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 .btns{display:flex;gap:14px;justify-content:center;align-items:center;min-height:140px;margin-top:14px;flex-wrap:wrap}
-#yes{transition:transform .25s;z-index:2}
+#yes,#sorryYes{transition:transform .25s;z-index:2}
 .taunt{min-height:24px;font-size:14px;color:var(--r);font-weight:600;position:relative;z-index:2}
 
 /* Inputs & Shake Validation */
-label{display:block;text-align:left;font-size:14px;font-weight:600;margin:12px 0 6px}
+label{display:block;text-align:left;font-size:13.5px;font-weight:600;margin:11px 0 5px}
 input,textarea{
-  width:100%;border:2px solid var(--border);border-radius:14px;padding:12px 14px;
+  width:100%;border:2px solid var(--border);border-radius:14px;padding:11px 13px;
   font:inherit;font-size:16px;background:rgba(255,255,255,.95);color:#4c0519;resize:vertical;
   transition:border-color .2s,box-shadow .2s;
 }
@@ -93,13 +109,12 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 }
 .shake{animation:shake .35s ease;border-color:#e11d48!important}
 
-/* Collapsible Drawer in Generator */
+/* Collapsible Drawer */
 .adv-toggle{
-  width:100%;margin-top:14px;padding:10px 14px;border-radius:14px;border:1.5px dashed var(--border);
-  background:var(--soft);color:var(--r);font:inherit;font-size:14px;font-weight:600;cursor:pointer;
-  display:flex;justify-content:space-between;align-items:center;transition:background .2s;
+  width:100%;margin-top:12px;padding:10px 14px;border-radius:14px;border:1.5px dashed var(--border);
+  background:var(--soft);color:var(--r);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
 }
-.adv-toggle:active{transform:scale(.99)}
 .adv-box{
   margin-top:8px;padding:12px 14px;border-radius:18px;background:var(--soft);
   border:1px solid var(--border);text-align:left;animation:cardEnter .25s ease both;
@@ -107,10 +122,10 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 
 /* 2-Column Grid Selection Cards */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.chips.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .chip{
   position:relative;border:2px solid var(--border);background:rgba(255,255,255,.94);
-  border-radius:14px;padding:10px 12px;font:inherit;font-size:14px;font-weight:500;
+  border-radius:14px;padding:9px 12px;font:inherit;font-size:14px;font-weight:500;
   cursor:pointer;color:#4c0519;text-align:left;touch-action:manipulation;
   transition:transform .14s,border-color .18s,background .18s,box-shadow .18s;
   display:flex;flex-direction:column;justify-content:center;
@@ -121,25 +136,54 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   box-shadow:0 6px 14px rgba(225,29,72,.22);font-weight:600;
 }
 .chip.on::after{
-  content:'✓';position:absolute;top:6px;right:8px;font-size:12px;font-weight:700;
-  background:rgba(255,255,255,.25);width:18px;height:18px;border-radius:999px;
+  content:'✓';position:absolute;top:6px;right:8px;font-size:11px;font-weight:700;
+  background:rgba(255,255,255,.25);width:17px;height:17px;border-radius:999px;
   display:flex;align-items:center;justify-content:center;
 }
+.chip.correct{background:#10b981!important;border-color:#10b981!important;color:#fff!important}
+.chip.wrong{background:#ef4444!important;border-color:#ef4444!important;color:#fff!important}
 .chip.t{padding:10px 26px 10px 12px;line-height:1.25}
 .chip.t small{display:block;font-size:11.5px;opacity:.78;margin-top:2px;font-weight:400}
 
 /* Step-by-Step Wizard Progress Bar */
-.step-header{margin-bottom:14px;text-align:left}
+.step-header{margin-bottom:12px;text-align:left}
 .step-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:var(--r);margin-bottom:6px}
 .step-bar-bg{height:8px;background:rgba(225,29,72,.14);border-radius:999px;overflow:hidden}
 .step-bar-fill{height:100%;background:var(--btn-grad);border-radius:999px;width:25%;transition:width .35s cubic-bezier(.22,1,.36,1)}
 .step-pane{animation:stepSlide .28s cubic-bezier(.22,1,.36,1) both;text-align:left}
 @keyframes stepSlide{
-  from{opacity:0;transform:translateX(18px)}
+  from{opacity:0;transform:translateX(14px)}
   to{opacity:1;transform:translateX(0)}
 }
-.step-nav{display:flex;gap:10px;margin-top:16px}
+.step-nav{display:flex;gap:10px;margin-top:14px}
 .step-nav .btn{flex:1}
+
+/* Quiz Setup & Leaderboard */
+.quiz-setup-box{background:var(--soft);border:1.5px solid var(--border);border-radius:16px;padding:12px;margin-top:10px}
+.lb-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;text-align:left;max-height:220px;overflow-y:auto}
+.lb-item{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.92);color:#4c0519;padding:9px 12px;border-radius:12px;border:1px solid var(--border);font-size:14px;font-weight:600}
+
+/* NGL Inbox Item */
+.ngl-item{background:rgba(255,255,255,.95);color:#4c0519;border:1.5px solid var(--border);border-radius:14px;padding:11px 12px;margin-top:8px;text-align:left}
+
+/* Interactive Birthday Cake */
+.cake-stage{position:relative;margin:18px auto 12px;width:200px;height:175px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;user-select:none;cursor:pointer}
+.candles-row{display:flex;gap:22px;margin-bottom:-4px;z-index:3}
+.candle{width:12px;height:42px;background:repeating-linear-gradient(45deg,#fff,#fff 5px,#fb7185 5px,#fb7185 10px);border-radius:4px;position:relative;border:1px solid #fda4af}
+.flame{
+  width:14px;height:22px;background:radial-gradient(circle at 50% 70%,#fff 10%,#facc15 45%,#f97316 85%);
+  border-radius:50% 50% 35% 35%;position:absolute;top:-22px;left:-2px;
+  box-shadow:0 0 14px #facc15,0 0 26px #f97316;
+  animation:flicker .45s infinite alternate;transform-origin:bottom center;
+}
+.flame.out{opacity:0;transform:scale(0);transition:all .3s}
+@keyframes flicker{
+  0%{transform:scale(1) rotate(-3deg)}
+  100%{transform:scale(1.1,0.94) rotate(3deg)}
+}
+.cake-top{width:150px;height:44px;background:linear-gradient(180deg,#fda4af,#fb7185);border-radius:14px 14px 4px 4px;position:relative;border:2px solid #e11d48;box-shadow:inset 0 8px 0 #fff1f2}
+.cake-btm{width:184px;height:56px;background:linear-gradient(180deg,#fb7185,#e11d48);border-radius:10px 10px 16px 16px;border:2px solid #be123c;box-shadow:inset 0 10px 0 #ffe4e6}
+.cake-plate{width:200px;height:10px;background:#fecdd3;border-radius:999px;border:1.5px solid #fda4af}
 
 /* Bottom Sheet Modal on Mobile */
 .modal{
@@ -202,7 +246,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 
 /* QR Code Box */
 .qr-wrap{margin-top:12px;background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;color:#4c0519}
-.qr-wrap img{width:140px;height:140px;border-radius:10px;border:1px solid #fecdd3;padding:6px;background:#fff}
+.qr-wrap img{width:136px;height:136px;border-radius:10px;border:1px solid #fecdd3;padding:6px;background:#fff}
 
 /* Admin Panel Styles */
 .admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
@@ -215,9 +259,9 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 
 @media (max-width:480px){
   main{padding:52px 10px 56px}
-  .card{padding:22px 15px;border-radius:24px}
+  .card{padding:20px 14px;border-radius:24px}
   h1{font-size:21px}
-  .big{font-size:44px}
+  .big{font-size:42px}
   .btn{font-size:16px;padding:12px 20px}
   .modal{align-items:flex-end;padding:0}
   .modal .box{max-width:100%;border-radius:26px 26px 0 0;padding:16px 18px 28px}
@@ -228,6 +272,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 <div class='hearts' id='hearts'></div>
 <div class='toast' id='toast'></div>
 <button type='button' class='music-btn' id='musicBtn' title='ব্যাকগ্রাউন্ড মিউজিক'>🔇 মিউজিক</button>
+<canvas id='storyCanvas' width='720' height='1080' hidden></canvas>
 <main>
 
 <section class='card' id='loader' hidden>
@@ -256,52 +301,108 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     </div>
   </div>
   <div class='admin-stats' id='admStats'></div>
-  <input id='admSearch' placeholder='নাম, আইডি বা নম্বর দিয়ে খুঁজো…' style='margin-top:6px'>
+  <input id='admSearch' placeholder='নাম, আইডি, মোড বা নম্বর দিয়ে খুঁজো…' style='margin-top:6px'>
   <div class='admin-list' id='admList'></div>
 </section>
 
-<!-- Clean Generator Card with Collapsible Customization Drawer -->
+<!-- ================= UNIFIED CLEAN GENERATOR HUB ================= -->
 <section class='card' id='gen' hidden>
-  <div class='big'>💌</div>
-  <h1>প্রপোজাল লিংক বানাও</h1>
-  <p>নাম দাও, লিংক রেডি। পাঠিয়ে দাও তোমার স্পেশাল মানুষকে।</p>
+  <div class='big' id='genEmoji'>💌</div>
+  <h1 id='genTitle'>প্রপোজাল লিংক বানাও</h1>
+  <p id='genSub'>নাম দাও, লিংক রেডি। পাঠিয়ে দাও তোমার স্পেশাল মানুষকে।</p>
 
-  <label>তার নাম</label>
-  <input id='gTo' placeholder='যেমন: মিথিলা'>
-
-  <label>তোমার নাম</label>
-  <input id='gFrom' placeholder='যেমন: রিয়াদ'>
-
-  <button type='button' class='adv-toggle' id='advToggle'>
-    <span>⚙️ প্রশ্ন, চিরকুট, থিম ও WhatsApp যুক্ত করো (ঐচ্ছিক)</span>
-    <span id='advArrow'>▼</span>
-  </button>
-
-  <div class='adv-box' id='advBox' hidden>
-    <label style='margin-top:2px'>তোমার WhatsApp নম্বর (উত্তর পাঠানোর জন্য)</label>
-    <input id='gWa' inputmode='tel' placeholder='01XXXXXXXXX'>
-
-    <label>কী প্রশ্ন করতে চাও?</label>
-    <div class='chips' id='cQ'></div>
-    <input id='gQ' placeholder='অথবা নিজের মতো প্রশ্ন লিখো…' style='margin-top:8px'>
-
-    <label>সিক্রেট চিঠি / মনের কথা</label>
-    <textarea id='gNote' rows='2' placeholder='যেমন: অনেকদিন ধরেই তোমাকে একটা কথা বলতে চেয়েছিলাম…'></textarea>
-
-    <label>থিম বেছে নাও</label>
-    <div class='chips grid2' id='cTheme'></div>
+  <!-- Clean 2x2 Segmented Mode Switcher -->
+  <div class='mode-switcher'>
+    <button type='button' class='mode-tab active' data-mode='proposal'>💌 ডেট প্রপোজাল</button>
+    <button type='button' class='mode-tab' data-mode='quiz'>🏆 বন্ধু কুইজ</button>
+    <button type='button' class='mode-tab' data-mode='ngl'>🕵️ গোপন মেসেজ</button>
+    <button type='button' class='mode-tab' data-mode='wish'>🎂 জন্মদিন / সরি</button>
   </div>
 
-  <div style='margin-top:16px'>
-    <button class='btn full' id='gMake'>লিংক তৈরি করো</button>
+  <!-- Mode Pane 1: Date Proposal -->
+  <div class='mode-pane' id='paneProposal'>
+    <label>তার নাম</label>
+    <input id='gTo' placeholder='যেমন: মিথিলা'>
+    <label>তোমার নাম</label>
+    <input id='gFrom' placeholder='যেমন: রিয়াদ'>
+
+    <button type='button' class='adv-toggle' id='advToggle'>
+      <span>⚙️ প্রশ্ন, চিরকুট, থিম ও WhatsApp যুক্ত করো (ঐচ্ছিক)</span>
+      <span id='advArrow'>▼</span>
+    </button>
+    <div class='adv-box' id='advBox' hidden>
+      <label style='margin-top:2px'>তোমার WhatsApp নম্বর (উত্তর পাঠানোর জন্য)</label>
+      <input id='gWa' inputmode='tel' placeholder='01XXXXXXXXX'>
+      <label>কী প্রশ্ন করতে চাও?</label>
+      <div class='chips' id='cQ'></div>
+      <input id='gQ' placeholder='অথবা নিজের মতো প্রশ্ন লিখো…' style='margin-top:8px'>
+      <label>সিক্রেট চিঠি / মনের কথা</label>
+      <textarea id='gNote' rows='2' placeholder='যেমন: অনেকদিন ধরেই তোমাকে একটা কথা বলতে চেয়েছিলাম…'></textarea>
+      <label>থিম বেছে নাও</label>
+      <div class='chips grid2' id='cTheme'></div>
+    </div>
+    <div style='margin-top:14px'>
+      <button class='btn full' id='gMake'>প্রপোজাল লিংক তৈরি করো</button>
+    </div>
+  </div>
+
+  <!-- Mode Pane 2: Friend/Couple Quiz ("আমাকে কতটুকু চেনো?") -->
+  <div class='mode-pane' id='paneQuiz' hidden>
+    <label>তোমার নাম</label>
+    <input id='qzCreator' placeholder='যেমন: রিয়াদ'>
+    <div class='quiz-setup-box'>
+      <div class='step-meta'>
+        <span id='qzStepLbl'>প্রশ্ন ১ / ৫</span>
+        <span style='font-size:12px;color:var(--mute)'>সঠিক উত্তরটি সিলেক্ট করো</span>
+      </div>
+      <div style='font-weight:700;font-size:15px;margin:6px 0 8px;color:var(--ink)' id='qzSetupQ'></div>
+      <div class='chips grid2' id='qzSetupOpts'></div>
+      <div style='display:flex;justify-content:space-between;margin-top:10px;gap:8px'>
+        <button type='button' class='btn sm back' id='qzPrevBtn'>← আগের প্রশ্ন</button>
+        <button type='button' class='btn sm outline' id='qzNextBtn'>পরের প্রশ্ন →</button>
+      </div>
+    </div>
+    <div style='margin-top:14px'>
+      <button class='btn full' id='qzMake'>কুইজ লিংক তৈরি করো 🏆</button>
+    </div>
+  </div>
+
+  <!-- Mode Pane 3: Secret Anonymous Message Box (Bangla NGL) -->
+  <div class='mode-pane' id='paneNgl' hidden>
+    <label>তোমার নাম / ডাকনাম</label>
+    <input id='nglOwner' placeholder='যেমন: রিয়াদ'>
+    <label>ইনবক্সের শিরোনাম (ঐচ্ছিক)</label>
+    <input id='nglPrompt' placeholder='নাম গোপন রেখে আমাকে যেকোনো কথা বা প্রশ্ন লিখে যাও!'>
+    <div style='margin-top:14px'>
+      <button class='btn full' id='nglMake'>গোপন মেসেজ লিংক তৈরি করো 🕵️</button>
+    </div>
+  </div>
+
+  <!-- Mode Pane 4: Birthday Cake & Sorry Card -->
+  <div class='mode-pane' id='paneWish' hidden>
+    <label>কোন ধরনের সারপ্রাইজ পাঠাতে চাও?</label>
+    <div class='chips grid2' id='wishTypeChips'>
+      <button type='button' class='chip on' data-wtype='birthday'>🎂 জন্মদিনের কেক</button>
+      <button type='button' class='chip' data-wtype='sorry'>🥺 রাগ ভাঙানো (Sorry)</button>
+    </div>
+    <label>তার নাম</label>
+    <input id='wTo' placeholder='যেমন: মিথিলা'>
+    <label>তোমার নাম</label>
+    <input id='wFrom' placeholder='যেমন: রিয়াদ'>
+    <label id='wMsgLbl'>জন্মদিনের শুভেচ্ছা বার্তা 🎂</label>
+    <textarea id='wNote' rows='2' placeholder='যেমন: শুভ জন্মদিন! তোমার প্রতিটি দিন আনন্দে ভরে উঠুক…'></textarea>
+    <div style='margin-top:14px'>
+      <button class='btn full' id='wMake'>সারপ্রাইজ লিংক তৈরি করো ✨</button>
+    </div>
   </div>
 
   <div id='prevTrackBtnWrap' style='margin-top:10px' hidden>
-    <button type='button' class='btn sm outline full' id='showPrevTrackBtn'>তোমার আগের লিংকের স্ট্যাটাস দেখো</button>
+    <button type='button' class='btn sm outline full' id='showPrevTrackBtn'>তোমার আগের লিংকের স্ট্যাটাস / ইনবক্স দেখো</button>
   </div>
 
+  <!-- Unified Output & Live Tracker / Inbox / Leaderboard -->
   <div id='gOut' hidden>
-    <p class='small' style='margin-top:14px;color:var(--r);font-weight:600;text-align:left'>সিক্রেট শর্ট লিংক (খোলার আগে নাম দেখা যাবে না):</p>
+    <p class='small' style='margin-top:14px;color:var(--r);font-weight:600;text-align:left'>তোমার সিক্রেট শর্ট লিংক:</p>
     <div class='link' id='gLink'></div>
     <div class='mbtns' style='margin-top:10px'>
       <button class='btn sm' id='gCopy' style='flex:1'>লিংক কপি</button>
@@ -315,7 +416,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     </div>
     <div class='tracker' id='gTracker' hidden>
       <div class='tracker-head'>
-        <span>লাইভ স্ট্যাটাস</span>
+        <span id='gTrackerTitle'>লাইভ স্ট্যাটাস</span>
         <button type='button' class='chip' id='gRefresh' style='padding:4px 10px;font-size:12px'>আপডেট</button>
       </div>
       <div id='gStatusText'></div>
@@ -324,7 +425,9 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   <div class='visit'>তুমিও একটু ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
 </section>
 
-<!-- Intro / Envelope Card -->
+<!-- ================= RECIPIENT VIEWS FOR ALL 4 MODES ================= -->
+
+<!-- 1. Proposal Intro / Envelope Card -->
 <section class='card' id='intro' hidden>
   <div class='big' id='envIcon'>💌</div>
   <h1 id='iH'></h1>
@@ -336,7 +439,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   <div style='margin-top:18px'><button class='btn full' id='iGo'>খুলে দেখো 🥰</button></div>
 </section>
 
-<!-- Ask Card -->
+<!-- 1b. Proposal Ask Card -->
 <section class='card' id='ask' hidden>
   <div class='big'>🥺</div>
   <h1 id='aH'></h1>
@@ -351,7 +454,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   <div class='taunt' id='taunt'></div>
 </section>
 
-<!-- Step-by-Step Wizard Details Card -->
+<!-- 1c. Proposal Step-by-Step Wizard Details Card -->
 <section class='card' id='details' hidden>
   <div class='step-header'>
     <div class='step-meta'>
@@ -361,7 +464,6 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     <div class='step-bar-bg'><div class='step-bar-fill' id='stepBarFill'></div></div>
   </div>
 
-  <!-- Step 1: Date & Time -->
   <div class='step-pane' id='step1'>
     <label style='margin-top:4px'>কোন দিন আমাদের দেখা হবে? 📅</label>
     <input type='date' id='dDate'>
@@ -374,7 +476,6 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     </div>
   </div>
 
-  <!-- Step 2: Location -->
   <div class='step-pane' id='step2' hidden>
     <label style='margin-top:4px'>কোথায় ঘুরতে যাবে? 📍</label>
     <div class='chips grid2' id='cLoc'></div>
@@ -385,31 +486,25 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     </div>
   </div>
 
-  <!-- Step 3: Food & Gift -->
   <div class='step-pane' id='step3' hidden>
     <label style='margin-top:4px'>কী খাবে? 🍽️ (একাধিক বাছাই করা যাবে)</label>
     <div class='chips grid2' id='cFood'></div>
     <input id='oFood' placeholder='অন্য কোনো খাবার…' style='margin-top:8px'>
-
     <label>কী গিফট পেলে খুশি হবে? 🎁 (ঐচ্ছিক)</label>
     <div class='chips grid2' id='cGift'></div>
     <input id='oGift' placeholder='অন্য কোনো গিফট…' style='margin-top:8px'>
-
     <div class='step-nav'>
       <button type='button' class='btn back' id='prevStep3'>← পেছনে</button>
       <button type='button' class='btn' id='nextStep3'>পরের ধাপ →</button>
     </div>
   </div>
 
-  <!-- Step 4: Dress Code & Reply Note -->
   <div class='step-pane' id='step4' hidden>
     <label style='margin-top:4px'>কেমন পোশাক পরবো দুজনে? 👗</label>
     <div class='chips grid2' id='cDress'></div>
     <input id='oDress' placeholder='অন্য পোশাক বা রঙ লিখো…' style='margin-top:8px'>
-
     <label>তার জন্য ছোট্ট কোনো কথা বা শর্ত লিখবে? ✍️ (ঐচ্ছিক)</label>
     <input id='oReply' placeholder='যেমন: দেরি করলে কিন্তু কথা বলব না!'>
-
     <div class='visit'>ডেটের আগে একটু ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
     <div class='step-nav'>
       <button type='button' class='btn back' id='prevStep4'>← পেছনে</button>
@@ -418,7 +513,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   </div>
 </section>
 
-<!-- Done Card -->
+<!-- 1d. Proposal Done Card -->
 <section class='card' id='done' hidden>
   <div class='big'>💖</div>
   <h1>দারুণ! ডেট ফিক্সড 🥳</h1>
@@ -433,6 +528,153 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   </div>
   <p class='small' id='sendNote'></p>
   <div class='visit'>রিপ্লাই পাবার পর hellojubayer.online এ ঘুরতে এসো<br><a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
+</section>
+
+<!-- 2. Quiz Player Card ("আমাকে কতটুকু চেনো?") -->
+<section class='card' id='quizPlayCard' hidden>
+  <div class='big'>🏆</div>
+  <h1 id='qzPlayTitle'>আমাকে কতটুকু চেনো?</h1>
+  <p id='qzPlaySub'>৫টি প্রশ্নের উত্তর দিয়ে প্রমাণ করো!</p>
+
+  <div id='qzStartPane'>
+    <label>তোমার নাম লিখো</label>
+    <input id='qzPlayerName' placeholder='যেমন: সামিয়া'>
+    <div style='margin-top:14px'>
+      <button type='button' class='btn full' id='qzStartBtn'>কুইজ শুরু করো →</button>
+    </div>
+    <div id='qzPreLbWrap' style='margin-top:16px' hidden>
+      <div style='font-weight:700;font-size:14px;color:var(--r);text-align:left'>🏅 লিডারবোর্ড (কে কত পেল):</div>
+      <div class='lb-list' id='qzPreLb'></div>
+    </div>
+  </div>
+
+  <div id='qzGamePane' hidden>
+    <div class='step-header' style='margin-top:10px'>
+      <div class='step-meta'>
+        <span id='qzPlayStep'>প্রশ্ন ১ / ৫</span>
+        <span id='qzPlayScore'>স্কোর: ০</span>
+      </div>
+      <div class='step-bar-bg'><div class='step-bar-fill' id='qzPlayBar'></div></div>
+    </div>
+    <h2 style='font-size:18px;margin:10px 0 12px;text-align:left' id='qzPlayQText'></h2>
+    <div class='chips grid2' id='qzPlayOpts'></div>
+  </div>
+
+  <div id='qzResultPane' hidden>
+    <div class='love-letter' style='text-align:center;margin-top:12px'>
+      <div style='font-size:32px;font-weight:700;color:var(--r)' id='qzFinalScoreTxt'></div>
+      <p id='qzFinalComment' style='color:#4c0519;font-weight:600'></p>
+    </div>
+    <div style='font-weight:700;font-size:14px;color:var(--r);text-align:left;margin-top:12px'>🏆 লাইভ লিডারবোর্ড:</div>
+    <div class='lb-list' id='qzResultLb'></div>
+    <div style='margin-top:14px'>
+      <a href='/' class='btn full' style='display:block;text-decoration:none'>নিজের কুইজ লিংক বানাও ✨</a>
+    </div>
+  </div>
+  <div class='visit'>ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
+</section>
+
+<!-- 3. Anonymous NGL Send Card ("মনের গোপন কথা") -->
+<section class='card' id='nglSendCard' hidden>
+  <div class='big'>🕵️</div>
+  <h1 id='nglSendTitle'>গোপন বার্তা পাঠাও</h1>
+  <p id='nglSendPrompt'>নাম গোপন রেখে মনের যেকোনো কথা লিখে যাও!</p>
+  <div style='margin:8px 0'><span class='badge'>🔒 তোমার নাম ১০০% গোপন থাকবে</span></div>
+
+  <div id='nglFormPane'>
+    <label>মেসেজের ধরন বেছে নাও</label>
+    <div class='chips grid2' id='nglTagChips'>
+      <button type='button' class='chip on' data-ntag='💖 গোপন ক্রাশ'>💖 গোপন ক্রাশ</button>
+      <button type='button' class='chip' data-ntag='🔥 সত্যি কথা'>🔥 সত্যি কথা</button>
+      <button type='button' class='chip' data-ntag='😂 মজার রোস্ট'>😂 মজার রোস্ট</button>
+      <button type='button' class='chip' data-ntag='❓ গোপন প্রশ্ন'>❓ গোপন প্রশ্ন</button>
+    </div>
+    <div style='display:flex;justify-content:space-between;align-items:center;margin-top:12px'>
+      <label style='margin:0'>তোমার গোপন মেসেজ</label>
+      <button type='button' class='chip' id='nglDiceBtn' style='padding:4px 10px;font-size:12px'>🎲 র‍্যান্ডম মেসেজ</button>
+    </div>
+    <textarea id='nglMsgInput' rows='3' placeholder='এখানে নির্ভয়ে তোমার মনের কথা লিখো…' style='margin-top:6px'></textarea>
+    <div style='margin-top:14px'>
+      <button type='button' class='btn full' id='nglSendBtn'>গোপনে পাঠিয়ে দাও 🚀</button>
+    </div>
+  </div>
+
+  <div id='nglSentPane' hidden>
+    <div class='love-letter' style='text-align:center'>
+      <h2 style='margin:0 0 6px;color:var(--r)'>মেসেজ চলে গেছে! 🎉</h2>
+      <p style='color:#4c0519'>তোমার পরিচয় সম্পূর্ণ গোপন রাখা হয়েছে।</p>
+    </div>
+    <button type='button' class='btn outline full' id='nglAgainBtn' style='margin-bottom:8px'>আরেকটি গোপন মেসেজ পাঠাও</button>
+    <a href='/' class='btn full' style='display:block;text-decoration:none'>নিজের গোপন ইনবক্স লিংক খোলো 🕵️</a>
+  </div>
+  <div class='visit'>ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
+</section>
+
+<!-- 4a. Interactive Birthday Cake Card -->
+<section class='card' id='bdayCard' hidden>
+  <div class='big' id='bdayTopEmoji'>🎂</div>
+  <h1 id='bdayTitle'>শুভ জন্মদিন!</h1>
+  <p id='bdaySub'>কেকের মোমবাতিতে ফুঁ দিয়ে সারপ্রাইজ আনলক করো!</p>
+
+  <div class='cake-stage' id='cakeStage' title='মোমবাতি নেভাতে ট্যাপ করো'>
+    <div class='candles-row'>
+      <div class='candle'><div class='flame' id='fl1'></div></div>
+      <div class='candle'><div class='flame' id='fl2'></div></div>
+      <div class='candle'><div class='flame' id='fl3'></div></div>
+    </div>
+    <div class='cake-top'></div>
+    <div class='cake-btm'></div>
+    <div class='cake-plate'></div>
+  </div>
+
+  <div id='bdayBlowControls'>
+    <div class='mbtns'>
+      <button type='button' class='btn sm' id='bdayMicBtn'>🎙️ মাইক্রোফোনে ফুঁ দাও</button>
+      <button type='button' class='btn sm outline' id='bdayTapBtn'>💨 ট্যাপ করে ফুঁ দাও</button>
+    </div>
+    <p class='small' id='bdayMicStatus'>মাইক্রোফোন অন করে জোরে ফুঁ দাও অথবা কেকের ওপর ট্যাপ করো!</p>
+  </div>
+
+  <div id='bdayUnlocked' hidden>
+    <div class='love-letter'>
+      <div class='love-letter-title' id='bdayFromTitle'>💌 শুভেচ্ছা বার্তা:</div>
+      <div class='love-letter-body' id='bdayNoteBody'></div>
+    </div>
+    <label>তাকে ধন্যবাদ বা ছোট্ট রিপ্লাই পাঠাও ✍️ (ঐচ্ছিক)</label>
+    <input id='bdayReplyInput' placeholder='যেমন: অনেক ধন্যবাদ! সারপ্রাইজটা দারুণ ছিল 💖'>
+    <div style='margin-top:10px'>
+      <button type='button' class='btn full' id='bdayReplyBtn'>রিপ্লাই সেভ করো 💌</button>
+    </div>
+  </div>
+  <div class='visit'>ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
+</section>
+
+<!-- 4b. Interactive Sorry / Apology Card -->
+<section class='card' id='sorryCard' hidden>
+  <div class='big' id='sorryEmoji'>🥺</div>
+  <h1 id='sorryTitle'>প্লিজ মাফ করে দাও!</h1>
+  <div class='love-letter' id='sorryNoteWrap'>
+    <div class='love-letter-title' id='sorryFromLbl'>📜 মনের কথা:</div>
+    <div class='love-letter-body' id='sorryNoteTxt'></div>
+  </div>
+  <div class='btns' id='sorryBtns'>
+    <button type='button' class='btn' id='sorryYes'>মাফ করলাম 💖</button>
+    <button type='button' class='btn no' id='sorryNo'>না 😤</button>
+  </div>
+  <div class='taunt' id='sorryTaunt'></div>
+
+  <div id='sorryForgivenPane' hidden>
+    <div class='love-letter' style='text-align:center'>
+      <h2 style='color:var(--r);margin:0 0 6px'>অনেক ধন্যবাদ মাফ করার জন্য! 🥹💖</h2>
+      <p style='color:#4c0519'>কথা দিচ্ছি আর কখনো এমন হবে না!</p>
+    </div>
+    <label>তার জন্য কোনো শর্ত বা বার্তা লিখবে? ✍️</label>
+    <input id='sorryReplyInput' placeholder='যেমন: এবার মাফ করলাম, কিন্তু কাচ্চি খাওয়াতে হবে!'>
+    <div style='margin-top:10px'>
+      <button type='button' class='btn full' id='sorryReplyBtn'>বার্তা পাঠিয়ে দাও 💌</button>
+    </div>
+  </div>
+  <div class='visit'>ঘুরে আসো → <a href='https://hellojubayer.online' target='_blank' rel='noopener'>hellojubayer.online</a></div>
 </section>
 
 </main>
@@ -472,6 +714,28 @@ function shakeEl(el){
   if(el.focus)el.focus();
 }
 
+// ---------- Mode Switcher in Generator ----------
+let activeGenMode='proposal';
+const modeMeta={
+  proposal:{emoji:'💌',title:'প্রপোজাল লিংক বানাও',sub:'নাম দাও, লিংক রেডি। পাঠিয়ে দাও তোমার স্পেশাল মানুষকে।',pane:'paneProposal'},
+  quiz:{emoji:'🏆',title:'আমাকে কতটুকু চেনো?',sub:'নিজের সম্পর্কে ৫টি প্রশ্নের উত্তর সিলেক্ট করে বন্ধুদের চ্যালেঞ্জ করো!',pane:'paneQuiz'},
+  ngl:{emoji:'🕵️',title:'গোপন মেসেজ ইনবক্স',sub:'নিজের লিংক তৈরি করে স্টোরিতে দাও, সবাই নাম গোপন রেখে মেসেজ পাঠাবে!',pane:'paneNgl'},
+  wish:{emoji:'🎂',title:'জন্মদিন ও রাগ ভাঙানো কার্ড',sub:'মোমবাতি নেভানো জন্মদিনের কেক অথবা রাগ ভাঙানোর মিষ্টি লিংক বানাও!',pane:'paneWish'}
+};
+
+document.querySelectorAll('.mode-tab').forEach(btn=>{
+  btn.onclick=()=>{
+    haptic(18);
+    const m=btn.getAttribute('data-mode');
+    activeGenMode=m;
+    document.querySelectorAll('.mode-tab').forEach(x=>x.classList.toggle('active',x===btn));
+    ['paneProposal','paneQuiz','paneNgl','paneWish'].forEach(p=>$(p).hidden=(p!==modeMeta[m].pane));
+    $('genEmoji').textContent=modeMeta[m].emoji;
+    $('genTitle').textContent=modeMeta[m].title;
+    $('genSub').textContent=modeMeta[m].sub;
+  };
+});
+
 // ---------- Collapsible Customization Drawer ----------
 $('advToggle').onclick=()=>{
   haptic(15);
@@ -480,6 +744,61 @@ $('advToggle').onclick=()=>{
   box.hidden=!open;
   $('advArrow').textContent=open?'▲':'▼';
 };
+
+// ---------- Quiz Bank & Setup State ----------
+const quizBank=[
+  {q:'আমার সবচেয়ে প্রিয় খাবার কোনটি?',opts:['🍛 বিরিয়ানি / কাচ্চি','🍕 ফাস্টফুড (পিৎজা/বার্গার)','🥟 ফুচকা ও চটপটি','🍦 আইসক্রিম / মিষ্টি']},
+  {q:'অবসর সময়ে আমি কী করতে সবচেয়ে ভালোবাসি?',opts:['😴 লম্বা ঘুম দিতে','🎬 মুভি বা সিরিজ দেখতে','🎧 গান শুনতে','📱 ফোনে আড্ডা দিতে']},
+  {q:'আমি রেগে গেলে সাধারণত কী করি?',opts:['🤫 একদম চুপ হয়ে যাই','😤 কথা বলা বন্ধ করে দিই','🍕 খাওয়া-দাওয়া করি','😴 ঘুমিয়ে পড়ি']},
+  {q:'আমার স্বপ্নের ঘুরতে যাওয়ার জায়গা কোনটি?',opts:['🌊 কক্সবাজার সমুদ্র','⛰️ পাহাড় ও মেঘ (সাজেক/সিলেট)','🌧️ বৃষ্টির দিনে নির্জন রাস্তা','☕ প্রিয় মানুষের সাথে ক্যাফে']},
+  {q:'আমার কাছে সবচেয়ে বেশি গুরুত্বপূর্ণ কোনটি?',opts:['💖 সত্যিকারের ভালোবাসা','🤝 বিশ্বস্ত বন্ধুত্ব','🏡 পরিবার','✨ মানসিক শান্তি']}
+];
+let quizAnswers=[0,0,0,0,0];
+let qzSetupIdx=0;
+
+function renderQuizSetupStep(){
+  const item=quizBank[qzSetupIdx];
+  $('qzStepLbl').textContent='প্রশ্ন '+toBnDigits(qzSetupIdx+1)+' / ৫';
+  $('qzSetupQ').textContent=item.q;
+  const box=$('qzSetupOpts');
+  box.innerHTML='';
+  item.opts.forEach((opt,i)=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='chip'+(quizAnswers[qzSetupIdx]===i?' on':'');
+    b.textContent=opt;
+    b.onclick=()=>{
+      haptic(15);
+      quizAnswers[qzSetupIdx]=i;
+      renderQuizSetupStep();
+      if(qzSetupIdx<4)setTimeout(()=>{qzSetupIdx++;renderQuizSetupStep()},220);
+    };
+    box.appendChild(b);
+  });
+  $('qzPrevBtn').disabled=(qzSetupIdx===0);
+  $('qzNextBtn').disabled=(qzSetupIdx===4);
+}
+$('qzPrevBtn').onclick=()=>{if(qzSetupIdx>0){haptic(15);qzSetupIdx--;renderQuizSetupStep()}};
+$('qzNextBtn').onclick=()=>{if(qzSetupIdx<4){haptic(15);qzSetupIdx++;renderQuizSetupStep()}};
+renderQuizSetupStep();
+
+// ---------- Wish Mode Sub-Type Toggle ----------
+let selectedWishType='birthday';
+document.querySelectorAll('#wishTypeChips .chip').forEach(b=>{
+  b.onclick=()=>{
+    haptic(15);
+    document.querySelectorAll('#wishTypeChips .chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    selectedWishType=b.getAttribute('data-wtype');
+    if(selectedWishType==='birthday'){
+      $('wMsgLbl').textContent='জন্মদিনের শুভেচ্ছা বার্তা 🎂';
+      $('wNote').placeholder='যেমন: শুভ জন্মদিন! তোমার প্রতিটি দিন আনন্দে ভরে উঠুক…';
+    }else{
+      $('wMsgLbl').textContent='রাগ ভাঙানোর সরি মেসেজ 🥺';
+      $('wNote').placeholder='যেমন: আমার ভুল হয়ে গেছে, প্লিজ রাগ করে থেকো না…';
+    }
+  };
+});
 
 // ---------- Couple Compatibility Score ----------
 function calcMatchScore(a,b){
@@ -630,8 +949,15 @@ async function dbUpdateProposal(id,patch){
     });
     if(res.ok){const d=await res.json();if(d.ok)return d.proposal}
   }catch(e){}
-  let existing=await dbGetProposal(id)||{id,status:'created',no_dodges:0,riddle_attempts:0,foods:[],gifts:[],created_at:new Date().toISOString()};
-  const updated={...existing,...patch,updated_at:new Date().toISOString()};
+  let existing=await dbGetProposal(id)||{id,status:'created',no_dodges:0,riddle_attempts:0,foods:[],gifts:[],payload:{},created_at:new Date().toISOString()};
+  const nextPayload={...(existing.payload||{}),...(patch.payload||{})};
+  if(patch.append_entry){
+    const entries=Array.isArray(nextPayload.entries)?[...nextPayload.entries]:[];
+    entries.unshift({...patch.append_entry,at:new Date().toISOString()});
+    nextPayload.entries=entries;
+  }
+  const updated={...existing,...patch,payload:nextPayload,updated_at:new Date().toISOString()};
+  delete updated.append_entry;
   await dbSaveProposal(updated);
   return updated;
 }
@@ -664,6 +990,7 @@ if(wa.startsWith('0'))wa='88'+wa;
 let askQuestion=(P.get('q')||'').trim()||'আমার সাথে একটা ডেটে যাবে?';
 let loveNote='';
 let matchScore=98;
+let loadedRecord=null;
 
 const show=id=>{
   document.querySelectorAll('.card').forEach(c=>{
@@ -674,12 +1001,60 @@ const show=id=>{
 
 (function(){const h=$('hearts'),em=['❤️','💗','💕','💖','🌸'];for(let i=0;i<18;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=Math.random()*100+'%';s.style.fontSize=(16+Math.random()*22)+'px';s.style.animationDuration=(9+Math.random()*10)+'s';s.style.animationDelay=(-Math.random()*14)+'s';h.appendChild(s)}})();
 
-function burst(){const em=['💖','❤️','💕','🌹','✨'];for(let i=0;i<24;i++){const s=document.createElement('span');s.className='pop';s.textContent=em[i%em.length];s.style.left='50vw';s.style.top='55vh';s.style.fontSize=(18+Math.random()*20)+'px';s.style.setProperty('--x',(Math.random()*600-300)+'px');s.style.setProperty('--y',(Math.random()*-700-50)+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),2300)}}
+function burst(){const em=['💖','❤️','💕','🌹','✨','🎉'];for(let i=0;i<24;i++){const s=document.createElement('span');s.className='pop';s.textContent=em[i%em.length];s.style.left='50vw';s.style.top='55vh';s.style.fontSize=(18+Math.random()*20)+'px';s.style.setProperty('--x',(Math.random()*600-300)+'px');s.style.setProperty('--y',(Math.random()*-700-50)+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),2300)}}
 
 let pzOpen=false;
 function closeModal(){pzOpen=false;$('modal').hidden=true}
 function openModal(html){$('mbox').innerHTML=html;$('modal').hidden=false}
 function goBack(){closeModal();$('taunt').textContent='ঠিক আছে, আরেকবার ভেবে দেখো 🥰'}
+
+// ---------- NGL Story Card Generator (Canvas) ----------
+window.downloadNglStoryCard=function(ownerName,tag,msg){
+  haptic(20);
+  const c=$('storyCanvas');
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#e11d48');
+  g.addColorStop(0.5,'#be123c');
+  g.addColorStop(1,'#4c0519');
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,W,H);
+
+  // Header box
+  ctx.fillStyle='#fff';
+  ctx.beginPath();
+  ctx.roundRect(60,180,W-120,660,36);
+  ctx.fill();
+
+  ctx.fillStyle='#ffe4e6';
+  ctx.beginPath();
+  ctx.roundRect(60,180,W-120,150,[36,36,0,0]);
+  ctx.fill();
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#e11d48';
+  ctx.font='700 28px "Hind Siliguri", sans-serif';
+  ctx.fillText('🕵️ মনের গোপন কথা ('+(tag||'গোপন বার্তা')+')',W/2,250);
+  ctx.fillStyle='#9f4a5e';
+  ctx.font='600 21px "Hind Siliguri", sans-serif';
+  ctx.fillText('প্রাপক: '+(ownerName||'আমি'),W/2,292);
+
+  ctx.fillStyle='#4c0519';
+  ctx.font='700 32px "Hind Siliguri", sans-serif';
+  wrapText(ctx,'“'+msg+'”',W/2,440,W-200,48);
+
+  ctx.fillStyle='#ffe4e6';
+  ctx.font='600 22px "Hind Siliguri", sans-serif';
+  ctx.fillText('❤️ hellojubayer.online',W/2,960);
+
+  const a=document.createElement('a');
+  a.download='secret-message-story.png';
+  a.href=c.toDataURL('image/png');
+  a.click();
+  showToast('স্টোরি কার্ড ডাউনলোড হয়েছে 📸');
+};
 
 // ---------- Live Countdown Timer ----------
 let cdInterval=null;
@@ -760,25 +1135,62 @@ let trackerCdInterval=null;
 function renderTrackerStatus(rec){
   if(!rec)return;
   $('gTracker').hidden=false;
+  const m=rec.mode||'proposal';
+  const entries=(rec.payload&&Array.isArray(rec.payload.entries))?rec.payload.entries:[];
+
+  if(m==='quiz'){
+    $('gTrackerTitle').textContent='🏆 কুইজ লিডারবোর্ড ('+toBnDigits(entries.length)+' জন খেলেছে)';
+    if(!entries.length){
+      $('gStatusText').innerHTML='<p class="small">এখনো কেউ কুইজটি খেলেনি। লিংকটি বন্ধুদের পাঠিয়ে দাও!</p>';
+      return;
+    }
+    const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
+    $('gStatusText').innerHTML='<div class="lb-list">'+sorted.map((e,i)=>
+      `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name||'বন্ধু'}</span><span class="badge">${toBnDigits(e.score||0)} / ৫</span></div>`
+    ).join('')+'</div>';
+    return;
+  }
+
+  if(m==='ngl'){
+    $('gTrackerTitle').textContent='🕵️ গোপন মেসেজ ইনবক্স ('+toBnDigits(entries.length)+' টি)';
+    if(!entries.length){
+      $('gStatusText').innerHTML='<p class="small">এখনো কোনো গোপন মেসেজ আসেনি। লিংকটি স্টোরিতে শেয়ার করো!</p>';
+      return;
+    }
+    $('gStatusText').innerHTML=entries.map(e=>{
+      const safeOwner=(rec.from_name||'আমি').replace(/'/g,'');
+      const safeTag=(e.tag||'গোপন বার্তা').replace(/'/g,'');
+      const safeMsg=(e.text||'').replace(/'/g,'').replace(/\n/g,' ');
+      return `<div class="ngl-item">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span class="badge">${e.tag||'গোপন বার্তা'}</span>
+          <button type="button" class="chip" style="padding:3px 9px;font-size:11.5px" onclick="downloadNglStoryCard('${safeOwner}','${safeTag}','${safeMsg}')">📸 স্টোরি কার্ড</button>
+        </div>
+        <div style="font-size:14.5px;font-weight:600;color:#4c0519">“${e.text||''}”</div>
+      </div>`;
+    }).join('');
+    return;
+  }
+
+  $('gTrackerTitle').textContent='লাইভ স্ট্যাটাস';
   const labels={
     created:'⏳ লিংক তৈরি হয়েছে (এখনো খোলা হয়নি)',
     opened:'👀 সে লিংকটা খুলে দেখেছে!',
-    accepted:'💖 সে Yes বলেছে! ডেট সাজাচ্ছে…',
-    confirmed:'🥳 দারুণ খবর! সে ডেট কনফার্ম করেছে!'
+    accepted:'💖 সে অ্যাকশন নিয়েছে!',
+    confirmed:'🥳 দারুণ খবর! সম্পন্ন হয়েছে!'
   };
   let html='<div><span class="badge">'+(labels[rec.status]||labels.created)+'</span></div>';
-  html+='<div style="margin-top:6px;font-size:13px;color:var(--ink)">👤 প্রাপক: <b>'+(rec.to_name||'-')+'</b>'+(rec.no_dodges?' • No চেষ্টার সংখ্যা: <b>'+toBnDigits(rec.no_dodges)+' বার</b>':'')+'</div>';
-  if(rec.question){
-    html+='<div style="margin-top:4px;font-size:13px;color:var(--mute)">💬 প্রশ্ন: '+rec.question+'</div>';
+  html+='<div style="margin-top:6px;font-size:13px;color:var(--ink)">👤 প্রাপক: <b>'+(rec.to_name||'-')+'</b>'+(rec.no_dodges?' • না চেষ্টার সংখ্যা: <b>'+toBnDigits(rec.no_dodges)+' বার</b>':'')+'</div>';
+  if(rec.reply_note){
+    html+='<div style="margin-top:6px;font-size:14px;color:var(--r)">✍️ তার রিপ্লাই: <b>“'+rec.reply_note+'”</b></div>';
   }
-  if(rec.status==='confirmed'){
+  if(m==='proposal' && rec.status==='confirmed'){
     html+='<div style="margin-top:8px;padding-top:8px;border-top:1px dashed #fda4af;line-height:1.7">';
     if(rec.when_formatted)html+='<div>📅 '+rec.when_formatted+'</div>';
     if(rec.location)html+='<div>📍 '+rec.location+'</div>';
     if(rec.foods&&rec.foods.length)html+='<div>🍽️ '+(Array.isArray(rec.foods)?rec.foods.join(', '):rec.foods)+'</div>';
     if(rec.gifts&&rec.gifts.length)html+='<div>🎁 '+(Array.isArray(rec.gifts)?rec.gifts.join(', '):rec.gifts)+'</div>';
     if(rec.dress_code)html+='<div>👗 পোশাক: '+rec.dress_code+'</div>';
-    if(rec.reply_note)html+='<div>✍️ তার বার্তা: <b>“'+rec.reply_note+'”</b></div>';
     if(rec.date_day&&rec.date_time){
       html+='<div id="trCd" style="margin-top:6px;font-weight:700;color:var(--r)"></div>';
     }
@@ -786,7 +1198,7 @@ function renderTrackerStatus(rec){
   }
   $('gStatusText').innerHTML=html;
   if(trackerCdInterval)clearInterval(trackerCdInterval);
-  if(rec.status==='confirmed'&&rec.date_day&&rec.date_time){
+  if(m==='proposal'&&rec.status==='confirmed'&&rec.date_day&&rec.date_time){
     const updateTrCd=()=>{
       const el=document.getElementById('trCd');
       if(el)el.textContent=formatCountdownText(rec.date_day,rec.date_time);
@@ -804,7 +1216,7 @@ async function refreshTrackedProposal(){
   const rec=await dbGetProposal(activeTrackId);
   if(rec){
     renderTrackerStatus(rec);
-    showToast('স্ট্যাটাস আপডেট হয়েছে ✅');
+    showToast('আপডেট হয়েছে ✅');
   }
 }
 
@@ -815,6 +1227,18 @@ function makeShortUrl(id){
   return u.toString();
 }
 
+function showGeneratedOutput(record){
+  $('prevTrackBtnWrap').hidden=true;
+  const sUrl=makeShortUrl(record.id);
+  $('gLink').textContent=sUrl;
+  updateQrCode(sUrl);
+  $('gOut').hidden=false;
+  activeTrackId=record.id;
+  try{localStorage.setItem('ag_last_id',record.id)}catch(e){}
+  renderTrackerStatus(record);
+  showToast('লিংক তৈরি হয়েছে! ✨');
+}
+
 // ---------- Hidden & Password-Protected Admin Logic ----------
 let adminKeySession=sessionStorage.getItem('ag_adm_key')||'';
 let adminProposals=[];
@@ -823,14 +1247,14 @@ function renderAdminDashboard(list){
   adminProposals=list||[];
   const total=adminProposals.length;
   const opened=adminProposals.filter(x=>x.status==='opened'||x.status==='accepted'||x.status==='confirmed').length;
-  const accepted=adminProposals.filter(x=>x.status==='accepted'||x.status==='confirmed').length;
+  const quizNglCount=adminProposals.filter(x=>x.mode==='quiz'||x.mode==='ngl').length;
   const confirmed=adminProposals.filter(x=>x.status==='confirmed').length;
 
   $('admStats').innerHTML=[
     ['মোট লিংক',toBnDigits(total)],
-    ['খুলে দেখেছে',toBnDigits(opened)],
-    ['Yes বলেছে',toBnDigits(accepted)],
-    ['ডেট ফিক্সড',toBnDigits(confirmed)]
+    ['ওপেন হয়েছে',toBnDigits(opened)],
+    ['কুইজ / NGL',toBnDigits(quizNglCount)],
+    ['কনফার্মড',toBnDigits(confirmed)]
   ].map(s=>`<div class="stat-card"><div class="stat-num">${s[1]}</div><div class="stat-lbl">${s[0]}</div></div>`).join('');
 
   filterAdminList();
@@ -840,42 +1264,45 @@ function filterAdminList(){
   const q=($('admSearch').value||'').trim().toLowerCase();
   const filtered=adminProposals.filter(r=>{
     if(!q)return true;
-    return [r.id,r.to_name,r.from_name,r.whatsapp,r.location,r.question,r.reply_note]
+    return [r.id,r.mode,r.to_name,r.from_name,r.whatsapp,r.location,r.question,r.reply_note]
       .some(v=>String(v||'').toLowerCase().includes(q));
   });
 
   if(!filtered.length){
-    $('admList').innerHTML='<p style="text-align:center;padding:20px">কোনো প্রপোজাল পাওয়া যায়নি।</p>';
+    $('admList').innerHTML='<p style="text-align:center;padding:20px">কোনো ডেটা পাওয়া যায়নি।</p>';
     return;
   }
 
-  const statusMap={
-    created:'⏳ তৈরি হয়েছে',
-    opened:'👀 ওপেন করেছে',
-    accepted:'💖 Yes বলেছে',
-    confirmed:'🥳 ডেট কনফার্মড'
+  const modeLabels={
+    proposal:'💌 প্রপোজাল',
+    quiz:'🏆 কুইজ',
+    ngl:'🕵️ গোপন মেসেজ',
+    birthday:'🎂 জন্মদিন',
+    sorry:'🥺 সরি কার্ড'
   };
 
   $('admList').innerHTML=filtered.map(r=>{
     const link=makeShortUrl(r.id);
     const foods=Array.isArray(r.foods)?r.foods.join(', '):(r.foods||'');
     const gifts=Array.isArray(r.gifts)?r.gifts.join(', '):(r.gifts||'');
+    const entries=(r.payload&&Array.isArray(r.payload.entries))?r.payload.entries:[];
     return `<div class="admin-item">
       <div class="admin-item-head">
-        <div><b>${r.from_name||'কেউ একজন'}</b> ➡️ <b>${r.to_name||'-'}</b> <small style="color:#9f4a5e">(#${r.id})</small></div>
-        <span class="badge">${statusMap[r.status]||r.status}</span>
+        <div><span class="badge" style="margin-right:6px">${modeLabels[r.mode||'proposal']||'💌'}</span><b>${r.from_name||'কেউ'}</b> ➡️ <b>${r.to_name||'সবাই'}</b> <small style="color:#9f4a5e">(#${r.id})</small></div>
+        <span class="badge">${r.status}</span>
       </div>
       <div style="font-size:13px;line-height:1.65;color:#4c0519">
         ${r.whatsapp?`<div>📱 WhatsApp: <b>${r.whatsapp}</b></div>`:''}
-        ${r.question?`<div>💬 প্রশ্ন: ${r.question}</div>`:''}
-        ${r.love_note?`<div>📜 চিঠি: <i>“${r.love_note}”</i></div>`:''}
-        <div>🏃 No চেষ্টা: <b>${toBnDigits(r.no_dodges||0)} বার</b> • ধাঁধা: <b>${toBnDigits(r.riddle_attempts||0)} বার</b></div>
+        ${r.question?`<div>💬 প্রশ্ন/শিরোনাম: ${r.question}</div>`:''}
+        ${r.love_note?`<div>📜 নোট: <i>“${r.love_note}”</i></div>`:''}
+        ${r.no_dodges?`<div>🏃 না চেষ্টা: <b>${toBnDigits(r.no_dodges)} বার</b></div>`:''}
         ${r.when_formatted?`<div>📅 ডেট: <b>${r.when_formatted}</b></div>`:''}
         ${r.location?`<div>📍 স্থান: <b>${r.location}</b></div>`:''}
         ${foods?`<div>🍽️ খাবার: ${foods}</div>`:''}
         ${gifts?`<div>🎁 গিফট: ${gifts}</div>`:''}
         ${r.dress_code?`<div>👗 পোশাক: ${r.dress_code}</div>`:''}
-        ${r.reply_note?`<div>✍️ প্রাপকের বার্তা: <b style="color:#e11d48">“${r.reply_note}”</b></div>`:''}
+        ${r.reply_note?`<div>✍️ রিপ্লাই: <b style="color:#e11d48">“${r.reply_note}”</b></div>`:''}
+        ${entries.length?`<div style="margin-top:4px;padding-top:4px;border-top:1px dashed #fecdd3">📥 মোট এন্ট্রি/মেসেজ (${toBnDigits(entries.length)}): ${entries.map(e=>e.name?`${e.name} (${e.score}/5)`:`“${e.text}”`).join(' | ')}</div>`:''}
       </div>
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
         <button type="button" class="chip" style="font-size:12px;padding:4px 10px" onclick="navigator.clipboard.writeText('${link}');showToast('লিংক কপি হয়েছে ✅')">লিংক কপি</button>
@@ -887,7 +1314,7 @@ function filterAdminList(){
 }
 
 window.adminDeleteProposal=async(id)=>{
-  if(!confirm('এই প্রপোজালটি ডিলিট করতে চাও?'))return;
+  if(!confirm('এটি ডিলিট করতে চাও?'))return;
   try{
     const res=await fetch('/api/proposals?id='+encodeURIComponent(id),{
       method:'DELETE',
@@ -896,7 +1323,7 @@ window.adminDeleteProposal=async(id)=>{
     if(res.ok){
       adminProposals=adminProposals.filter(x=>x.id!==id);
       renderAdminDashboard(adminProposals);
-      showToast('প্রপোজাল ডিলিট হয়েছে');
+      showToast('ডিলিট হয়েছে');
     }
   }catch(e){}
 };
@@ -938,6 +1365,278 @@ $('admLogout').onclick=()=>{
   show('adminLock');
 };
 
+// ---------- Mode 2: Quiz Player Logic ----------
+function initQuizRecipient(rec){
+  show('quizPlayCard');
+  const creator=rec.from_name||'তোমার বন্ধু';
+  $('qzPlayTitle').textContent=creator+'-কে তুমি কতটুকু চেনো? 🏆';
+  const savedAnswers=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:[0,0,0,0,0];
+  const entries=(rec.payload&&Array.isArray(rec.payload.entries))?rec.payload.entries:[];
+
+  if(entries.length){
+    $('qzPreLbWrap').hidden=false;
+    const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
+    $('qzPreLb').innerHTML=sorted.map((e,i)=>
+      `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name}</span><span class="badge">${toBnDigits(e.score)} / ৫</span></div>`
+    ).join('');
+  }
+
+  let playerName='';
+  let curQ=0,score=0;
+
+  function renderPlayQ(){
+    const item=quizBank[curQ];
+    $('qzPlayStep').textContent='প্রশ্ন '+toBnDigits(curQ+1)+' / ৫';
+    $('qzPlayScore').textContent='স্কোর: '+toBnDigits(score);
+    $('qzPlayBar').style.width=((curQ+1)*20)+'%';
+    $('qzPlayQText').textContent=item.q;
+    const box=$('qzPlayOpts');
+    box.innerHTML='';
+    item.opts.forEach((opt,idx)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='chip';
+      b.textContent=opt;
+      b.onclick=async()=>{
+        haptic(20);
+        box.querySelectorAll('.chip').forEach(x=>x.disabled=true);
+        const rightIdx=Number(savedAnswers[curQ]||0);
+        if(idx===rightIdx){
+          b.classList.add('correct');
+          score++;
+          playTone(659.25,0.25,0.08,'triangle');
+        }else{
+          b.classList.add('wrong');
+          if(box.children[rightIdx])box.children[rightIdx].classList.add('correct');
+          playTone(220,0.3,0.08,'sine');
+        }
+        setTimeout(async()=>{
+          curQ++;
+          if(curQ<5){
+            renderPlayQ();
+          }else{
+            $('qzGamePane').hidden=true;
+            $('qzResultPane').hidden=false;
+            burst();playCelebrationChime();
+            $('qzFinalScoreTxt').textContent=toBnDigits(score)+' / ৫ 🌟';
+            $('qzFinalComment').textContent=score>=4?'অসাধারণ! তুমি তো '+creator+'-কে একদম ভেতর থেকে চেনো! 💖':(score>=2?'বেশ ভালোই চেনো দেখা যাচ্ছে! 😊':'হায় হায়! আরেকটু চেনা দরকার ছিল 😂');
+            const updated=await dbUpdateProposal(rec.id,{
+              status:'confirmed',
+              append_entry:{name:playerName,score}
+            });
+            const allEntries=(updated&&updated.payload&&Array.isArray(updated.payload.entries))?updated.payload.entries:[{name:playerName,score},...entries];
+            const sorted=[...allEntries].sort((a,b)=>(b.score||0)-(a.score||0));
+            $('qzResultLb').innerHTML=sorted.map((e,i)=>
+              `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name}</span><span class="badge">${toBnDigits(e.score)} / ৫</span></div>`
+            ).join('');
+          }
+        },850);
+      };
+      box.appendChild(b);
+    });
+  }
+
+  $('qzStartBtn').onclick=()=>{
+    const n=$('qzPlayerName').value.trim();
+    if(!n){shakeEl($('qzPlayerName'));showToast('তোমার নাম লিখো');return}
+    playerName=n;
+    $('qzStartPane').hidden=true;
+    $('qzGamePane').hidden=false;
+    startMusic();
+    renderPlayQ();
+  };
+}
+
+// ---------- Mode 3: Anonymous NGL Recipient Logic ----------
+const randomNglPrompts=[
+  'সত্যি করে বলো, তোমার কি আমার ওপর কখনো ক্রাশ ছিল? 🙈',
+  'তোমার হাসিটা আমার ভীষণ প্রিয়, কিন্তু কখনো সাহস করে বলতে পারিনি 💖',
+  'একদিন একসাথে চা খেতে গেলে কেমন হয় বলো তো? ☕',
+  'তোমার সবচেয়ে প্রিয় মানুষ কে? নাম বলো! 👀',
+  'তোমাকে দূর থেকে দেখলেই মন ভালো হয়ে যায় ✨'
+];
+function initNglRecipient(rec){
+  show('nglSendCard');
+  const owner=rec.from_name||'তোমার বন্ধু';
+  $('nglSendTitle').textContent=owner+'-কে গোপন মেসেজ পাঠাও';
+  if(rec.question)$('nglSendPrompt').textContent=rec.question;
+
+  let selectedTag='💖 গোপন ক্রাশ';
+  document.querySelectorAll('#nglTagChips .chip').forEach(b=>{
+    b.onclick=()=>{
+      haptic(15);
+      document.querySelectorAll('#nglTagChips .chip').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      selectedTag=b.getAttribute('data-ntag');
+    };
+  });
+
+  $('nglDiceBtn').onclick=()=>{
+    haptic(18);
+    $('nglMsgInput').value=randomNglPrompts[Math.floor(Math.random()*randomNglPrompts.length)];
+  };
+
+  $('nglSendBtn').onclick=async()=>{
+    const txt=$('nglMsgInput').value.trim();
+    if(!txt){shakeEl($('nglMsgInput'));showToast('কিছু একটা তো লিখো!');return}
+    $('nglSendBtn').disabled=true;
+    $('nglSendBtn').textContent='পাঠানো হচ্ছে…';
+    await dbUpdateProposal(rec.id,{
+      status:'confirmed',
+      append_entry:{tag:selectedTag,text:txt}
+    });
+    $('nglSendBtn').disabled=false;
+    $('nglSendBtn').textContent='গোপনে পাঠিয়ে দাও 🚀';
+    $('nglFormPane').hidden=true;
+    $('nglSentPane').hidden=false;
+    burst();playCelebrationChime();
+    showToast('গোপন মেসেজ পাঠানো হয়েছে! 🎉');
+  };
+
+  $('nglAgainBtn').onclick=()=>{
+    $('nglMsgInput').value='';
+    $('nglSentPane').hidden=true;
+    $('nglFormPane').hidden=false;
+  };
+}
+
+// ---------- Mode 4a: Interactive Birthday Cake Recipient Logic ----------
+function initBirthdayRecipient(rec){
+  show('bdayCard');
+  const toN=rec.to_name||'প্রিয়জন';
+  const fromN=rec.from_name||'কেউ একজন';
+  $('bdayTitle').textContent='শুভ জন্মদিন, '+toN+'! 🎂';
+  $('bdayFromTitle').textContent='💌 '+fromN+'-এর পক্ষ থেকে শুভেচ্ছা:';
+  $('bdayNoteBody').textContent=rec.love_note||('শুভ জন্মদিন '+toN+'! তোমার জীবনের প্রতিটি মুহূর্ত আনন্দ ও ভালোবাসায় ভরে উঠুক। 💖');
+  dbUpdateProposal(rec.id,{status:'opened'});
+
+  let blown=false;
+  let micStream=null;
+
+  function blowOutCandles(){
+    if(blown)return;
+    blown=true;
+    if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null}
+    ['fl1','fl2','fl3'].forEach(id=>$(id).classList.add('out'));
+    $('bdayTopEmoji').textContent='🥳';
+    $('bdaySub').textContent='ইয়েএএস! মোমবাতি নিভে গেছে! 🎉';
+    $('bdayBlowControls').hidden=true;
+    $('bdayUnlocked').hidden=false;
+    burst();startMusic();playCelebrationChime();haptic([40,60,40]);
+    dbUpdateProposal(rec.id,{status:'accepted'});
+  }
+
+  $('cakeStage').onclick=blowOutCandles;
+  $('bdayTapBtn').onclick=blowOutCandles;
+
+  $('bdayMicBtn').onclick=async()=>{
+    try{
+      micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+      $('bdayMicStatus').textContent='🎙️ এখন ফোনের মাইক্রোফোনে জোরে ফুঁ দাও… 💨';
+      const ctx=new (window.AudioContext||window.webkitAudioContext)();
+      const src=ctx.createMediaStreamSource(micStream);
+      const analyser=ctx.createAnalyser();
+      analyser.fftSize=256;
+      src.connect(analyser);
+      const data=new Uint8Array(analyser.frequencyBinCount);
+      const checkBlow=()=>{
+        if(blown)return;
+        analyser.getByteFrequencyData(data);
+        let sum=0;
+        for(let i=0;i<data.length;i++)sum+=data[i];
+        const avg=sum/data.length;
+        if(avg>48){
+          blowOutCandles();
+        }else{
+          requestAnimationFrame(checkBlow);
+        }
+      };
+      checkBlow();
+    }catch(e){
+      showToast('কেকের ওপর ট্যাপ করেই ফুঁ দাও! 💨');
+    }
+  };
+
+  $('bdayReplyBtn').onclick=async()=>{
+    const rep=$('bdayReplyInput').value.trim();
+    if(!rep){shakeEl($('bdayReplyInput'));showToast('ছোট্ট একটা রিপ্লাই লিখো');return}
+    await dbUpdateProposal(rec.id,{status:'confirmed',reply_note:rep});
+    $('bdayReplyBtn').textContent='রিপ্লাই পাঠানো হয়েছে ✅';
+    $('bdayReplyBtn').disabled=true;
+    burst();showToast('তোমার রিপ্লাই সেভ হয়েছে 💖');
+  };
+}
+
+// ---------- Mode 4b: Interactive Sorry / Apology Recipient Logic ----------
+const sorryTaunts=[
+  'কান ধরছি আর কখনো এমন হবে না! 🥺',
+  'এত রাগ করে থাকতে নেই তো, মাফ করে দাও প্লিজ 😭',
+  'তোমাকে প্রিয় খাবার ট্রিট দেবো, তাও মাফ করবে না? 🍛',
+  'না বাটনটা কিন্তু তোমার কথা শুনবে না 😜',
+  'প্লিজ একবার হাসো না! 😊💖',
+  'রাগ ভাঙাতে আর কত সাধবো বলো? 🥹'
+];
+function initSorryRecipient(rec){
+  show('sorryCard');
+  const toN=rec.to_name||'প্রিয়';
+  const fromN=rec.from_name||'কেউ একজন';
+  $('sorryTitle').textContent=toN+', প্লিজ মাফ করে দাও! 🥺';
+  $('sorryFromLbl').textContent='📜 '+fromN+'-এর মনের কথা:';
+  $('sorryNoteTxt').textContent=rec.love_note||'আমার সত্যিই ভুল হয়ে গেছে, প্লিজ রাগ করে থেকো না। মাফ করে দাও না? 💖';
+  dbUpdateProposal(rec.id,{status:'opened'});
+
+  let sDodges=0,sScale=1,sLast=0;
+  function dodgeSorryNo(e){
+    e.preventDefault();e.stopPropagation();
+    const now=Date.now();
+    if(now-sLast<260)return;
+    sLast=now;sDodges++;
+    haptic(18);
+    sScale=Math.min(1.5,sScale+0.07);
+    $('sorryYes').style.transform='scale('+sScale+')';
+    $('sorryTaunt').textContent=sorryTaunts[(sDodges-1)%sorryTaunts.length];
+    dbUpdateProposal(rec.id,{no_dodges:sDodges});
+
+    const b=$('sorryNo');
+    const card=$('sorryCard');
+    const cRect=card.getBoundingClientRect();
+    const yRect=$('sorryYes').getBoundingClientRect();
+    b.style.position='absolute';
+    const w=b.offsetWidth||80,h=b.offsetHeight||44,pad=14;
+    const maxL=Math.max(pad,card.clientWidth-w-pad);
+    const maxT=Math.max(pad,card.clientHeight-h-pad);
+    let lx=pad,ly=pad;
+    for(let i=0;i<15;i++){
+      lx=pad+Math.random()*(maxL-pad);
+      ly=pad+Math.random()*(maxT-pad);
+      const vpX=cRect.left+lx,vpY=cRect.top+ly;
+      const hit=(vpX+w+10>yRect.left && vpX-10<yRect.right && vpY+h+10>yRect.top && vpY-10<yRect.bottom);
+      if(!hit)break;
+    }
+    b.style.left=Math.round(lx)+'px';
+    b.style.top=Math.round(ly)+'px';
+  }
+  ['pointerenter','pointerdown','touchstart','mousedown','click'].forEach(ev=>$('sorryNo').addEventListener(ev,dodgeSorryNo,{passive:false}));
+
+  $('sorryYes').onclick=()=>{
+    startMusic();burst();playCelebrationChime();haptic([35,50,35]);
+    $('sorryEmoji').textContent='🥹💖';
+    $('sorryBtns').hidden=true;
+    $('sorryTaunt').hidden=true;
+    $('sorryForgivenPane').hidden=false;
+    dbUpdateProposal(rec.id,{status:'accepted',no_dodges:sDodges});
+  };
+
+  $('sorryReplyBtn').onclick=async()=>{
+    const rep=$('sorryReplyInput').value.trim();
+    if(!rep){shakeEl($('sorryReplyInput'));showToast('ছোট্ট একটা বার্তা লিখো');return}
+    await dbUpdateProposal(rec.id,{status:'confirmed',reply_note:rep});
+    $('sorryReplyBtn').textContent='বার্তা পাঠানো হয়েছে ✅';
+    $('sorryReplyBtn').disabled=true;
+    burst();showToast('বার্তা সেভ হয়েছে 💖');
+  };
+}
+
 // ---------- Main App Initialization ----------
 async function init(){
   if(isAdminRoute){
@@ -954,45 +1653,42 @@ async function init(){
     show('loader');
     const rec=await dbGetProposal(pid);
     if(rec){
+      loadedRecord=rec;
+      if(rec.theme)applyTheme(rec.theme);
+      const m=rec.mode||'proposal';
+      if(m==='quiz')return initQuizRecipient(rec);
+      if(m==='ngl')return initNglRecipient(rec);
+      if(m==='birthday')return initBirthdayRecipient(rec);
+      if(m==='sorry')return initSorryRecipient(rec);
+
       to=(rec.to_name||'').trim().slice(0,40);
       from=(rec.from_name||'').trim().slice(0,40);
       wa=(rec.whatsapp||'').replace(/\D/g,'');
       if(wa.startsWith('0'))wa='88'+wa;
       if(rec.question)askQuestion=rec.question;
       if(rec.love_note)loveNote=rec.love_note;
-      if(rec.theme)applyTheme(rec.theme);
       if(rec.match_score)matchScore=rec.match_score;
     }
   }
 
   if(!to){
     show('gen');
-    // Keep generator fresh; if there is a previous link on this device, offer a subtle button to view it
     if(activeTrackId){
       $('prevTrackBtnWrap').hidden=false;
       $('showPrevTrackBtn').onclick=async()=>{
         haptic(20);
         $('prevTrackBtnWrap').hidden=true;
         const rec=await dbGetProposal(activeTrackId);
-        if(rec){
-          $('gOut').hidden=false;
-          const sUrl=makeShortUrl(rec.id);
-          $('gLink').textContent=sUrl;
-          updateQrCode(sUrl);
-          renderTrackerStatus(rec);
-        }else{
-          showToast('আগের লিংকটি খুঁজে পাওয়া যায়নি');
-        }
+        if(rec)showGeneratedOutput(rec);
+        else showToast('আগের লিংকটি খুঁজে পাওয়া যায়নি');
       };
     }
     $('gRefresh').onclick=refreshTrackedProposal;
+
+    // 1. Create Date Proposal Link
     $('gMake').onclick=async()=>{
       const t=$('gTo').value.trim();
-      if(!t){
-        shakeEl($('gTo'));
-        showToast('তার নাম লিখো 🥺');
-        return;
-      }
+      if(!t){shakeEl($('gTo'));showToast('তার নাম লিখো 🥺');return}
       haptic(25);
       const f=$('gFrom').value.trim();
       const w=$('gWa').value.replace(/\D/g,'');
@@ -1003,47 +1699,84 @@ async function init(){
 
       $('gMake').disabled=true;
       $('gMake').textContent='লিংক তৈরি হচ্ছে…';
-
       const record={
-        id:newId,
-        to_name:t,
-        from_name:f,
-        whatsapp:w,
-        question:q,
-        love_note:note,
-        theme:currentTheme,
-        match_score:mScore,
-        status:'created',
-        no_dodges:0,
-        riddle_attempts:0,
-        foods:[],
-        gifts:[],
-        dress_code:'',
-        reply_note:'',
-        created_at:new Date().toISOString()
+        id:newId,mode:'proposal',to_name:t,from_name:f,whatsapp:w,question:q,
+        love_note:note,theme:currentTheme,match_score:mScore,status:'created',
+        no_dodges:0,riddle_attempts:0,foods:[],gifts:[],dress_code:'',reply_note:'',
+        payload:{},created_at:new Date().toISOString()
       };
       await dbSaveProposal(record);
-
       $('gMake').disabled=false;
-      $('gMake').textContent='লিংক তৈরি করো';
-      $('prevTrackBtnWrap').hidden=true;
-
-      const sUrl=makeShortUrl(newId);
-      $('gLink').textContent=sUrl;
-      updateQrCode(sUrl);
-      $('gOut').hidden=false;
-      showToast('সিক্রেট লিংক তৈরি হয়েছে! ✨');
-
-      activeTrackId=newId;
-      try{localStorage.setItem('ag_last_id',newId)}catch(e){}
-      renderTrackerStatus(record);
+      $('gMake').textContent='প্রপোজাল লিংক তৈরি করো';
+      showGeneratedOutput(record);
     };
+
+    // 2. Create Quiz Link
+    $('qzMake').onclick=async()=>{
+      const creator=$('qzCreator').value.trim();
+      if(!creator){shakeEl($('qzCreator'));showToast('তোমার নাম লিখো 🏆');return}
+      haptic(25);
+      const newId=Math.random().toString(36).slice(2,8);
+      $('qzMake').disabled=true;
+      $('qzMake').textContent='কুইজ লিংক তৈরি হচ্ছে…';
+      const record={
+        id:newId,mode:'quiz',to_name:'বন্ধুরা',from_name:creator,
+        question:creator+'-কে কতটুকু চেনো?',status:'created',theme:currentTheme,
+        payload:{answers:[...quizAnswers],entries:[]},created_at:new Date().toISOString()
+      };
+      await dbSaveProposal(record);
+      $('qzMake').disabled=false;
+      $('qzMake').textContent='কুইজ লিংক তৈরি করো 🏆';
+      showGeneratedOutput(record);
+    };
+
+    // 3. Create Secret NGL Link
+    $('nglMake').onclick=async()=>{
+      const owner=$('nglOwner').value.trim();
+      if(!owner){shakeEl($('nglOwner'));showToast('তোমার নাম লিখো 🕵️');return}
+      haptic(25);
+      const prompt=$('nglPrompt').value.trim()||'নাম গোপন রেখে আমাকে যেকোনো কথা বা প্রশ্ন লিখে যাও!';
+      const newId=Math.random().toString(36).slice(2,8);
+      $('nglMake').disabled=true;
+      $('nglMake').textContent='ইনবক্স তৈরি হচ্ছে…';
+      const record={
+        id:newId,mode:'ngl',to_name:owner,from_name:owner,
+        question:prompt,status:'created',theme:currentTheme,
+        payload:{entries:[]},created_at:new Date().toISOString()
+      };
+      await dbSaveProposal(record);
+      $('nglMake').disabled=false;
+      $('nglMake').textContent='গোপন মেসেজ লিংক তৈরি করো 🕵️';
+      showGeneratedOutput(record);
+    };
+
+    // 4. Create Birthday / Sorry Link
+    $('wMake').onclick=async()=>{
+      const t=$('wTo').value.trim();
+      if(!t){shakeEl($('wTo'));showToast('তার নাম লিখো');return}
+      const f=$('wFrom').value.trim();
+      const note=$('wNote').value.trim();
+      const newId=Math.random().toString(36).slice(2,8);
+      $('wMake').disabled=true;
+      $('wMake').textContent='লিংক তৈরি হচ্ছে…';
+      const record={
+        id:newId,mode:selectedWishType,to_name:t,from_name:f,
+        question:selectedWishType==='birthday'?'শুভ জন্মদিন!':'প্লিজ মাফ করে দাও!',
+        love_note:note,status:'created',theme:currentTheme,
+        payload:{},created_at:new Date().toISOString()
+      };
+      await dbSaveProposal(record);
+      $('wMake').disabled=false;
+      $('wMake').textContent='সারপ্রাইজ লিংক তৈরি করো ✨';
+      showGeneratedOutput(record);
+    };
+
     const copy=async(txt,btn,label)=>{
       haptic(20);
       try{
         await navigator.clipboard.writeText(txt);
         btn.textContent='কপি হয়েছে ✅';
-        showToast('কপি হয়েছে ✅ এবার তাকে পাঠিয়ে দাও!');
+        showToast('কপি হয়েছে ✅ এবার শেয়ার করে দাও!');
         setTimeout(()=>btn.textContent=label,2000);
       }catch(e){
         showToast('লিংকটা চেপে ধরে কপি করো');
@@ -1203,37 +1936,21 @@ function goToWizardStep(step){
 }
 
 $('nextStep1').onclick=()=>{
-  if(!$('dDate').value){
-    shakeEl($('dDate'));
-    showToast('তারিখ বেছে নাও 📅');
-    return;
-  }
-  if(!$('dTime').value){
-    shakeEl($('cTime'));
-    showToast('কখন দেখা হবে সেই সময়টা বেছে নাও 🕰️');
-    return;
-  }
+  if(!$('dDate').value){shakeEl($('dDate'));showToast('তারিখ বেছে নাও 📅');return}
+  if(!$('dTime').value){shakeEl($('cTime'));showToast('কখন দেখা হবে সেই সময়টা বেছে নাও 🕰️');return}
   goToWizardStep(2);
 };
 $('prevStep2').onclick=()=>goToWizardStep(1);
 $('nextStep2').onclick=()=>{
   const loc=$('oLoc').value.trim()||[...$('cLoc').querySelectorAll('.on')].map(x=>x.textContent).join(', ');
-  if(!loc){
-    shakeEl($('cLoc'));
-    showToast('কোথায় যাবে একটি জায়গা বেছে নাও 📍');
-    return;
-  }
+  if(!loc){shakeEl($('cLoc'));showToast('কোথায় যাবে একটি জায়গা বেছে নাও 📍');return}
   goToWizardStep(3);
 };
 $('prevStep3').onclick=()=>goToWizardStep(2);
 $('nextStep3').onclick=()=>{
   const foods=[...$('cFood').querySelectorAll('.on')].map(x=>x.textContent);
   if($('oFood').value.trim())foods.push($('oFood').value.trim());
-  if(!foods.length){
-    shakeEl($('cFood'));
-    showToast('কমপক্ষে একটি খাবার বেছে নাও 🍽️');
-    return;
-  }
+  if(!foods.length){shakeEl($('cFood'));showToast('কমপক্ষে একটি খাবার বেছে নাও 🍽️');return}
   goToWizardStep(4);
 };
 $('prevStep4').onclick=()=>goToWizardStep(3);
