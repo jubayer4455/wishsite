@@ -1,7 +1,4 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api/proposals", "destination": "/api/proposals.js" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "cleanUrls": true
 }

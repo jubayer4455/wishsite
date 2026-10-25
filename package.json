@@ -1,10 +1,8 @@
 {
   "name": "amader-golpo",
-  "version": "1.0.0",
-  "description": "আমাদের গল্প শুরু হোক 💌 — Romantic Date Proposal App with Supabase",
-  "main": "server.js",
+  "version": "1.1.0",
+  "description": "আমাদের গল্প শুরু হোক 💌 — All-in-One Viral Surprise Hub with Supabase",
   "scripts": {
-    "start": "node server.js",
     "dev": "node server.js",
     "setup-db": "node setup-supabase.js"
   }
