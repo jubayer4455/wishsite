@@ -1,8 +1,9 @@
--- Supabase SQL Schema for "আমাদের গল্প শুরু হোক 💌" (Amader Golpo)
+-- Supabase SQL Schema for "আমাদের গল্প শুরু হোক 💌" (All-in-One Viral Hub)
 -- Run this in your Supabase Dashboard -> SQL Editor
 
 create table if not exists public.proposals (
   id text primary key,
+  mode text default 'proposal', -- 'proposal' | 'quiz' | 'ngl' | 'birthday' | 'sorry'
   to_name text not null,
   from_name text default '',
   whatsapp text default '',
@@ -25,6 +26,7 @@ create table if not exists public.proposals (
   dress_code text default '',
   reply_note text default '',
   summary_text text default '',
+  payload jsonb default '{}'::jsonb,
   created_at timestamptz default now(),
   opened_at timestamptz,
   accepted_at timestamptz,
@@ -35,7 +37,6 @@ create table if not exists public.proposals (
 -- Enable Row Level Security (RLS)
 alter table public.proposals enable row level security;
 
--- Allow public read/insert/update via anon key as well as service_role
 drop policy if exists "Allow public read proposals" on public.proposals;
 create policy "Allow public read proposals"
   on public.proposals for select
