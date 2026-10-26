@@ -378,7 +378,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     <input id='qzCreator' placeholder='যেমন: রিয়াদ'>
     <div class='quiz-setup-box'>
       <div class='step-meta'>
-        <span id='qzStepLbl'>প্রশ্ন ১ / ৫</span>
+        <span id='qzStepLbl'>প্রশ্ন ১ / ১০</span>
         <button type='button' class='chip' id='qzEditToggle' style='padding:4px 10px;font-size:12px;color:var(--r)'>✍️ প্রশ্ন/অপশন বদলাও</button>
       </div>
       <div style='font-size:12px;color:var(--mute);margin-bottom:4px'>তোমার জন্য সঠিক উত্তরটি সিলেক্ট করো (চাইলে প্রশ্ন নিজের মতো লিখতে পারো):</div>
@@ -577,7 +577,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 <section class='card' id='quizPlayCard' hidden>
   <div class='big'>🏆</div>
   <h1 id='qzPlayTitle'>আমাকে কতটুকু চেনো?</h1>
-  <p id='qzPlaySub'>৫টি প্রশ্নের উত্তর দিয়ে প্রমাণ করো!</p>
+  <p id='qzPlaySub'>১০টি প্রশ্নের উত্তর দিয়ে প্রমাণ করো!</p>
 
   <div id='qzStartPane'>
     <label>তোমার নাম লিখো</label>
@@ -594,7 +594,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
   <div id='qzGamePane' hidden>
     <div class='step-header' style='margin-top:10px'>
       <div class='step-meta'>
-        <span id='qzPlayStep'>প্রশ্ন ১ / ৫</span>
+        <span id='qzPlayStep'>প্রশ্ন ১ / ১০</span>
         <span id='qzPlayScore'>স্কোর: ০</span>
       </div>
       <div class='step-bar-bg'><div class='step-bar-fill' id='qzPlayBar'></div></div>
@@ -788,7 +788,7 @@ function shakeEl(el){
 let activeGenMode='proposal';
 const modeMeta={
   proposal:{emoji:'💌',title:'প্রপোজাল লিংক বানাও',sub:'নাম দাও, লিংক রেডি। পাঠিয়ে দাও তোমার স্পেশাল মানুষকে।',pane:'paneProposal'},
-  quiz:{emoji:'🏆',title:'আমাকে কতটুকু চেনো?',sub:'নিজের সম্পর্কে ৫টি প্রশ্নের উত্তর সিলেক্ট করে বন্ধুদের চ্যালেঞ্জ করো!',pane:'paneQuiz'},
+  quiz:{emoji:'🏆',title:'আমাকে কতটুকু চেনো?',sub:'নিজের সম্পর্কে ১০টি প্রশ্নের উত্তর সিলেক্ট করে বন্ধুদের চ্যালেঞ্জ করো!',pane:'paneQuiz'},
   ngl:{emoji:'🕵️',title:'গোপন মেসেজ ইনবক্স',sub:'নিজের লিংক তৈরি করে স্টোরিতে দাও, সবাই নাম গোপন রেখে মেসেজ পাঠাবে!',pane:'paneNgl'},
   wish:{emoji:'🎂',title:'জন্মদিন ও রাগ ভাঙানো কার্ড',sub:'মোমবাতি নেভানো জন্মদিনের কেক অথবা রাগ ভাঙানোর মিষ্টি লিংক বানাও!',pane:'paneWish'}
 };
@@ -821,10 +821,15 @@ const defaultQuizBank=[
   {q:'অবসর সময়ে আমি কী করতে সবচেয়ে ভালোবাসি?',opts:['😴 লম্বা ঘুম দিতে','🎬 মুভি বা সিরিজ দেখতে','🎧 গান শুনতে','📱 ফোনে আড্ডা দিতে']},
   {q:'আমি রেগে গেলে সাধারণত কী করি?',opts:['🤫 একদম চুপ হয়ে যাই','😤 কথা বলা বন্ধ করে দিই','🍕 খাওয়া-দাওয়া করি','😴 ঘুমিয়ে পড়ি']},
   {q:'আমার স্বপ্নের ঘুরতে যাওয়ার জায়গা কোনটি?',opts:['🌊 কক্সবাজার সমুদ্র','⛰️ পাহাড় ও মেঘ (সাজেক/সিলেট)','🌧️ বৃষ্টির দিনে নির্জন রাস্তা','☕ প্রিয় মানুষের সাথে ক্যাফে']},
-  {q:'আমার কাছে সবচেয়ে বেশি গুরুত্বপূর্ণ কোনটি?',opts:['💖 সত্যিকারের ভালোবাসা','🤝 বিশ্বস্ত বন্ধুত্ব','🏡 পরিবার','✨ মানসিক শান্তি']}
+  {q:'আমার কাছে সবচেয়ে বেশি গুরুত্বপূর্ণ কোনটি?',opts:['💖 সত্যিকারের ভালোবাসা','🤝 বিশ্বস্ত বন্ধুত্ব','🏡 পরিবার','✨ মানসিক শান্তি']},
+  {q:'চা নাকি কফি—কোনটা আমার বেশি প্রিয়?',opts:['☕ দুধ চা / রং চা','🧋 কোল্ড কফি / হট কফি','🥤 কোল্ড ড্রিংকস / জুস','💧 কোনোটিই না, শুধু পানি']},
+  {q:'আমি কোন ধরনের মানুষ?',opts:['🦉 রাত জাগা পেঁচা (Night Owl)','🌅 সকালের পাখি (Early Bird)','😴 সবসময় ঘুমকাতুরে','⚡ মুডের ওপর নির্ভর করে']},
+  {q:'আমার প্রিয় ঋতু বা আবহাওয়া কোনটি?',opts:['🌧️ রিমঝিম বৃষ্টির দিন','❄️ শীতের কুয়াশা ভেজা সকাল','🌸 বসন্তের মিষ্টি বাতাস','🌙 জ্যোৎস্না ভরা রাত']},
+  {q:'আমার সবচেয়ে বড় দুর্বলতা কোনটি?',opts:['🥺 সহজেই মানুষকে বিশ্বাস করা','😡 হুট করে রেগে যাওয়া','💸 শপিং বা খাবারে টাকা ওড়ানো','🙈 মনের কথা মুখ ফুটে না বলা']},
+  {q:'বন্ধুদের আড্ডায় আমি সাধারণত কী করি?',opts:['😂 জোকস বলে সবাইকে হাসাই','🤫 চুপচাপ সবার কথা শুনি','📸 সবার ছবি ও ভিডিও তুলি','🍔 খাওয়ার প্ল্যান করি']}
 ];
 let customQuizBank=defaultQuizBank.map(x=>({q:x.q,opts:[...x.opts]}));
-let quizAnswers=[0,0,0,0,0];
+let quizAnswers=new Array(defaultQuizBank.length).fill(0);
 let qzSetupIdx=0;
 
 function syncQuizEditorInputs(){
@@ -834,8 +839,9 @@ function syncQuizEditorInputs(){
 }
 
 function renderQuizSetupStep(skipInputSync=false){
+  const totalQ=customQuizBank.length;
   const item=customQuizBank[qzSetupIdx];
-  $('qzStepLbl').textContent='প্রশ্ন '+toBnDigits(qzSetupIdx+1)+' / ৫';
+  $('qzStepLbl').textContent='প্রশ্ন '+toBnDigits(qzSetupIdx+1)+' / '+toBnDigits(totalQ);
   $('qzSetupQ').textContent=item.q;
   if(!skipInputSync)syncQuizEditorInputs();
   const box=$('qzSetupOpts');
@@ -849,14 +855,14 @@ function renderQuizSetupStep(skipInputSync=false){
       haptic(15);
       quizAnswers[qzSetupIdx]=i;
       renderQuizSetupStep(true);
-      if(qzSetupIdx<4 && $('qzEditBox').hidden){
+      if(qzSetupIdx<totalQ-1 && $('qzEditBox').hidden){
         setTimeout(()=>{qzSetupIdx++;renderQuizSetupStep()},220);
       }
     };
     box.appendChild(b);
   });
   $('qzPrevBtn').disabled=(qzSetupIdx===0);
-  $('qzNextBtn').disabled=(qzSetupIdx===4);
+  $('qzNextBtn').disabled=(qzSetupIdx===totalQ-1);
 }
 
 $('qzEditToggle').onclick=()=>{
@@ -889,7 +895,7 @@ $('qzResetDefaultBtn').onclick=()=>{
 };
 
 $('qzPrevBtn').onclick=()=>{if(qzSetupIdx>0){haptic(15);qzSetupIdx--;renderQuizSetupStep()}};
-$('qzNextBtn').onclick=()=>{if(qzSetupIdx<4){haptic(15);qzSetupIdx++;renderQuizSetupStep()}};
+$('qzNextBtn').onclick=()=>{if(qzSetupIdx<customQuizBank.length-1){haptic(15);qzSetupIdx++;renderQuizSetupStep()}};
 renderQuizSetupStep();
 
 // ---------- Wish Mode Sub-Type Toggle ----------
@@ -1242,34 +1248,37 @@ function updateQrCode(urlStr){
 }
 
 // ---------- Shared Quiz Leaderboard & Detailed Answer Log Modal ----------
-let activeQuizLogState={entries:[],questions:defaultQuizBank,answers:[0,0,0,0,0]};
+let activeQuizLogState={entries:[],questions:defaultQuizBank,answers:new Array(defaultQuizBank.length).fill(0)};
 
 function getQuizQuestions(rec){
-  if(rec&&rec.payload&&Array.isArray(rec.payload.questions)&&rec.payload.questions.length===5){
+  if(rec&&rec.payload&&Array.isArray(rec.payload.questions)&&rec.payload.questions.length>=5){
     return rec.payload.questions;
   }
   return defaultQuizBank;
 }
 
-function getQuizBadgeTag(score){
-  if(score>=5)return '🥇 কলিজার বন্ধু';
-  if(score===4)return '💖 খাঁটি বন্ধু';
-  if(score>=2)return '😅 মোটামুটি চেনো';
+function getQuizBadgeTag(score,total=10){
+  const pct=total>0?(score/total):0;
+  if(pct>=0.9)return '🥇 কলিজার বন্ধু';
+  if(pct>=0.7)return '💖 খাঁটি বন্ধু';
+  if(pct>=0.4)return '😅 মোটামুটি চেনো';
   return '🐸 নকল বন্ধু';
 }
 
 function renderQuizLeaderboardHtml(entries,questions,answers){
   const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
-  activeQuizLogState={entries:sorted,questions:questions||defaultQuizBank,answers:answers||[0,0,0,0,0]};
+  const qList=questions||defaultQuizBank;
+  const total=qList.length||10;
+  activeQuizLogState={entries:sorted,questions:qList,answers:answers||new Array(total).fill(0)};
   return sorted.map((e,i)=>{
     const s=Number(e.score||0);
     const hasPicks=Array.isArray(e.picks)&&e.picks.length>0;
     return `<div class="lb-item clickable" onclick="showQuizAnswerLog(${i})">
       <div>
-        <div>${toBnDigits(i+1)}. <b>${e.name||'বন্ধু'}</b> <small style="color:#9f4a5e">(${getQuizBadgeTag(s)})</small></div>
+        <div>${toBnDigits(i+1)}. <b>${e.name||'বন্ধু'}</b> <small style="color:#9f4a5e">(${getQuizBadgeTag(s,total)})</small></div>
         <div style="font-size:11.5px;color:#e11d48;margin-top:2px">${hasPicks?'👀 কোন প্রশ্নে কী উত্তর দিয়েছে দেখো →':'স্কোর কার্ড'}</div>
       </div>
-      <span class="badge">${toBnDigits(s)} / ৫</span>
+      <span class="badge">${toBnDigits(s)} / ${toBnDigits(total)}</span>
     </div>`;
   }).join('');
 }
@@ -1279,7 +1288,8 @@ window.showQuizAnswerLog=(idx)=>{
   const e=activeQuizLogState.entries[idx];
   if(!e)return;
   const qs=activeQuizLogState.questions||defaultQuizBank;
-  const ans=activeQuizLogState.answers||[0,0,0,0,0];
+  const total=qs.length||10;
+  const ans=activeQuizLogState.answers||new Array(total).fill(0);
   const picks=Array.isArray(e.picks)?e.picks:[];
 
   let bodyHtml='';
@@ -1301,8 +1311,8 @@ window.showQuizAnswerLog=(idx)=>{
   }
 
   openModal(
-    `<h2>👀 ${e.name||'বন্ধু'}-এর উত্তরসমূহ (${toBnDigits(e.score||0)}/৫)</h2>`+
-    `<div style="margin-bottom:6px"><span class="badge">${getQuizBadgeTag(Number(e.score||0))}</span></div>`+
+    `<h2>👀 ${e.name||'বন্ধু'}-এর উত্তরসমূহ (${toBnDigits(e.score||0)}/${toBnDigits(total)})</h2>`+
+    `<div style="margin-bottom:6px"><span class="badge">${getQuizBadgeTag(Number(e.score||0),total)}</span></div>`+
     bodyHtml+
     `<div class="mbtns"><button type="button" class="btn sm full" id="closeLogBtn">বন্ধ করো</button></div>`
   );
@@ -1323,7 +1333,7 @@ function renderTrackerStatus(rec){
       return;
     }
     const qs=getQuizQuestions(rec);
-    const ans=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:[0,0,0,0,0];
+    const ans=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:new Array(qs.length).fill(0);
     $('gStatusText').innerHTML='<div style="font-size:12px;color:var(--mute);margin-bottom:6px">💡 যেকোনো বন্ধুর নামের ওপর ট্যাপ করে সে কোন প্রশ্নে কী উত্তর দিয়েছে দেখো:</div><div class="lb-list">'+renderQuizLeaderboardHtml(entries,qs,ans)+'</div>';
     return;
   }
@@ -1479,7 +1489,7 @@ function filterAdminList(){
         ${gifts?`<div>🎁 গিফট: ${gifts}</div>`:''}
         ${r.dress_code?`<div>👗 পোশাক: ${r.dress_code}</div>`:''}
         ${r.reply_note?`<div>✍️ রিপ্লাই: <b style="color:#e11d48">“${r.reply_note}”</b></div>`:''}
-        ${entries.length?`<div style="margin-top:4px;padding-top:4px;border-top:1px dashed #fecdd3">📥 মোট এন্ট্রি/মেসেজ (${toBnDigits(entries.length)}): ${entries.map(e=>e.name?`${e.name} (${e.score}/5)`:`“${e.text}”`).join(' | ')}</div>`:''}
+        ${entries.length?`<div style="margin-top:4px;padding-top:4px;border-top:1px dashed #fecdd3">📥 মোট এন্ট্রি/মেসেজ (${toBnDigits(entries.length)}): ${entries.map(e=>e.name?`${e.name} (${e.score}/${(r.payload&&Array.isArray(r.payload.questions))?r.payload.questions.length:10})`:`“${e.text}”`).join(' | ')}</div>`:''}
       </div>
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
         <button type="button" class="chip" style="font-size:12px;padding:4px 10px" onclick="navigator.clipboard.writeText('${link}');showToast('লিংক কপি হয়েছে ✅')">লিংক কপি</button>
@@ -1543,11 +1553,12 @@ $('admLogout').onclick=()=>{
 };
 
 // ---------- Quiz Certificate Card Generator (Canvas) ----------
-function drawQuizCertificate({playerName,creatorName,score}){
+function drawQuizCertificate({playerName,creatorName,score,total=10}){
   const canvas=$('qzCertCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   const W=canvas.width,H=canvas.height;
+  const pct=total>0?(score/total):0;
 
   let gradColors=['#fff1f2','#fecdd3','#fbcfe8'];
   let badgeEmoji='🥇';
@@ -1555,18 +1566,18 @@ function drawQuizCertificate({playerName,creatorName,score}){
   let certSub='১০০% খাঁটি ও আসল বন্ধু প্রমাণিত!';
   let accent='#e11d48';
 
-  if(score===4){
+  if(pct<0.9 && pct>=0.7){
     badgeEmoji='💖';
     certTitle='খাঁটি বন্ধু সার্টিফিকেট';
     certSub='প্রায় সব গোপন খবরই জানে দেখা যাচ্ছে!';
     accent='#db2777';
-  }else if(score>=2){
+  }else if(pct<0.7 && pct>=0.4){
     badgeEmoji='😅';
     certTitle='কাজচালানো বন্ধু সার্টিফিকেট';
     certSub='অর্ধেক জানে আর অর্ধেক আন্দাজে ঢিল মেরেছে!';
     accent='#d97706';
     gradColors=['#fffbeb','#fef3c7','#fde68a'];
-  }else if(score<=1){
+  }else if(pct<0.4){
     badgeEmoji='🐸';
     certTitle='নকল বন্ধু সার্টিফিকেট';
     certSub='নামে মাত্র বন্ধু! আসলে কিছুই চেনে না 😂';
@@ -1620,7 +1631,7 @@ function drawQuizCertificate({playerName,creatorName,score}){
 
   ctx.fillStyle=accent;
   ctx.font='700 26px "Hind Siliguri", sans-serif';
-  ctx.fillText(creatorName+'-কে চেনার পরীক্ষায় স্কোর: '+toBnDigits(score)+' / ৫',W/2,368);
+  ctx.fillText(creatorName+'-কে চেনার পরীক্ষায় স্কোর: '+toBnDigits(score)+' / '+toBnDigits(total),W/2,368);
 
   ctx.fillStyle='#4c0519';
   ctx.font='600 22px "Hind Siliguri", sans-serif';
@@ -1637,7 +1648,9 @@ function initQuizRecipient(rec){
   const creator=rec.from_name||'তোমার বন্ধু';
   $('qzPlayTitle').textContent=creator+'-কে তুমি কতটুকু চেনো? 🏆';
   const activeQuestions=getQuizQuestions(rec);
-  const savedAnswers=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:[0,0,0,0,0];
+  const totalQ=activeQuestions.length||10;
+  $('qzPlaySub').textContent=toBnDigits(totalQ)+'টি প্রশ্নের উত্তর দিয়ে প্রমাণ করো!';
+  const savedAnswers=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:new Array(totalQ).fill(0);
   const entries=(rec.payload&&Array.isArray(rec.payload.entries))?rec.payload.entries:[];
 
   if(entries.length){
@@ -1651,9 +1664,9 @@ function initQuizRecipient(rec){
 
   function renderPlayQ(){
     const item=activeQuestions[curQ]||defaultQuizBank[curQ];
-    $('qzPlayStep').textContent='প্রশ্ন '+toBnDigits(curQ+1)+' / ৫';
+    $('qzPlayStep').textContent='প্রশ্ন '+toBnDigits(curQ+1)+' / '+toBnDigits(totalQ);
     $('qzPlayScore').textContent='স্কোর: '+toBnDigits(score);
-    $('qzPlayBar').style.width=((curQ+1)*20)+'%';
+    $('qzPlayBar').style.width=(((curQ+1)/totalQ)*100)+'%';
     $('qzPlayQText').textContent=item.q;
     const box=$('qzPlayOpts');
     box.innerHTML='';
@@ -1678,16 +1691,17 @@ function initQuizRecipient(rec){
         }
         setTimeout(async()=>{
           curQ++;
-          if(curQ<5){
+          if(curQ<totalQ){
             renderPlayQ();
           }else{
             $('qzGamePane').hidden=true;
             $('qzResultPane').hidden=false;
             burst();playCelebrationChime();
-            $('qzFinalScoreTxt').textContent=toBnDigits(score)+' / ৫ — '+getQuizBadgeTag(score);
-            $('qzFinalComment').textContent=score>=4?'অসাধারণ! তুমি তো '+creator+'-কে একদম ভেতর থেকে চেনো! 💖':(score>=2?'বেশ ভালোই চেনো দেখা যাচ্ছে! 😊':'হায় হায়! তুমি তো নকল বন্ধু বের হলে 😂');
+            const pct=totalQ>0?(score/totalQ):0;
+            $('qzFinalScoreTxt').textContent=toBnDigits(score)+' / '+toBnDigits(totalQ)+' — '+getQuizBadgeTag(score,totalQ);
+            $('qzFinalComment').textContent=pct>=0.7?'অসাধারণ! তুমি তো '+creator+'-কে একদম ভেতর থেকে চেনো! 💖':(pct>=0.4?'বেশ ভালোই চেনো দেখা যাচ্ছে! 😊':'হায় হায়! তুমি তো নকল বন্ধু বের হলে 😂');
 
-            drawQuizCertificate({playerName,creatorName:creator,score});
+            drawQuizCertificate({playerName,creatorName:creator,score,total:totalQ});
             $('dlQzCert').onclick=()=>{
               haptic(20);
               const link=document.createElement('a');
