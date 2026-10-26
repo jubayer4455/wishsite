@@ -160,13 +160,20 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 
 /* Quiz Setup & Leaderboard */
 .quiz-setup-box{background:var(--soft);border:1.5px solid var(--border);border-radius:16px;padding:12px;margin-top:10px}
-.lb-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;text-align:left;max-height:220px;overflow-y:auto}
-.lb-item{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.92);color:#4c0519;padding:9px 12px;border-radius:12px;border:1px solid var(--border);font-size:14px;font-weight:600}
+.qz-edit-box{background:rgba(255,255,255,.85);border:1.5px dashed var(--border);border-radius:14px;padding:10px;margin:8px 0 10px;text-align:left;animation:cardEnter .22s ease both}
+.qz-edit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:7px}
+.qz-edit-grid input{padding:8px 10px;font-size:13.5px;border-radius:10px}
+.lb-list{display:flex;flex-direction:column;gap:7px;margin-top:10px;text-align:left;max-height:240px;overflow-y:auto}
+.lb-item{display:flex;justify-content:space-between;align-items:center;gap:8px;background:rgba(255,255,255,.92);color:#4c0519;padding:9px 12px;border-radius:12px;border:1px solid var(--border);font-size:14px;font-weight:600;transition:transform .14s,border-color .18s}
+.lb-item.clickable{cursor:pointer}
+.lb-item.clickable:hover,.lb-item.clickable:active{border-color:var(--r);transform:scale(.99)}
+.ans-log-list{display:flex;flex-direction:column;gap:8px;margin:10px 0;text-align:left;max-height:56vh;overflow-y:auto}
+.ans-log-item{background:#fff1f2;border:1.5px solid #fecdd3;border-radius:14px;padding:10px 12px;font-size:13.5px;line-height:1.5;color:#4c0519}
 
 /* NGL Inbox Item */
 .ngl-item{background:rgba(255,255,255,.95);color:#4c0519;border:1.5px solid var(--border);border-radius:14px;padding:11px 12px;margin-top:8px;text-align:left}
 
-/* Interactive Birthday Cake */
+/* Interactive Birthday Cake & Balloons */
 .cake-stage{position:relative;margin:18px auto 12px;width:200px;height:175px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;user-select:none;cursor:pointer}
 .candles-row{display:flex;gap:22px;margin-bottom:-4px;z-index:3}
 .candle{width:12px;height:42px;background:repeating-linear-gradient(45deg,#fff,#fff 5px,#fb7185 5px,#fb7185 10px);border-radius:4px;position:relative;border:1px solid #fda4af}
@@ -184,6 +191,24 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
 .cake-top{width:150px;height:44px;background:linear-gradient(180deg,#fda4af,#fb7185);border-radius:14px 14px 4px 4px;position:relative;border:2px solid #e11d48;box-shadow:inset 0 8px 0 #fff1f2}
 .cake-btm{width:184px;height:56px;background:linear-gradient(180deg,#fb7185,#e11d48);border-radius:10px 10px 16px 16px;border:2px solid #be123c;box-shadow:inset 0 10px 0 #ffe4e6}
 .cake-plate{width:200px;height:10px;background:#fecdd3;border-radius:999px;border:1.5px solid #fda4af}
+.balloon-stage{background:var(--soft);border:1.5px dashed var(--border);border-radius:20px;padding:16px 12px;margin:14px 0;text-align:center;animation:cardEnter .35s ease both}
+.balloon-row{display:flex;justify-content:center;gap:16px;margin:14px 0 8px;flex-wrap:wrap}
+.balloon-btn{
+  border:2px solid var(--border);background:#fff;border-radius:22px;width:96px;height:110px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  cursor:pointer;box-shadow:0 10px 22px rgba(225,29,72,.14);
+  animation:floatBob 1.8s ease-in-out infinite alternate;
+  transition:transform .25s,opacity .25s,background .25s;user-select:none;
+}
+.balloon-btn:nth-child(2){animation-delay:.3s}
+.balloon-btn:nth-child(3){animation-delay:.6s}
+.balloon-btn .b-ico{font-size:40px;line-height:1}
+.balloon-btn .b-lbl{font-size:12px;font-weight:700;color:var(--r)}
+.balloon-btn.popped{background:#ffe4e6;border-color:var(--r);animation:none;transform:scale(.94);cursor:default}
+@keyframes floatBob{
+  from{transform:translateY(0) rotate(-2deg)}
+  to{transform:translateY(-8px) rotate(2deg)}
+}
 
 /* Bottom Sheet Modal on Mobile */
 .modal{
@@ -354,9 +379,26 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
     <div class='quiz-setup-box'>
       <div class='step-meta'>
         <span id='qzStepLbl'>প্রশ্ন ১ / ৫</span>
-        <span style='font-size:12px;color:var(--mute)'>সঠিক উত্তরটি সিলেক্ট করো</span>
+        <button type='button' class='chip' id='qzEditToggle' style='padding:4px 10px;font-size:12px;color:var(--r)'>✍️ প্রশ্ন/অপশন বদলাও</button>
       </div>
+      <div style='font-size:12px;color:var(--mute);margin-bottom:4px'>তোমার জন্য সঠিক উত্তরটি সিলেক্ট করো (চাইলে প্রশ্ন নিজের মতো লিখতে পারো):</div>
       <div style='font-weight:700;font-size:15px;margin:6px 0 8px;color:var(--ink)' id='qzSetupQ'></div>
+
+      <!-- Inline Custom Question Editor -->
+      <div class='qz-edit-box' id='qzEditBox' hidden>
+        <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:6px'>
+          <span style='font-size:12.5px;font-weight:700;color:var(--r)'>✍️ নিজের মতো প্রশ্ন ও ৪টি অপশন লিখো:</span>
+          <button type='button' class='chip' id='qzResetDefaultBtn' style='padding:3px 8px;font-size:11px'>↺ ডিফল্ট প্রশ্ন</button>
+        </div>
+        <input id='qzEditQInput' placeholder='তোমার কাস্টম প্রশ্ন লিখো…' style='padding:9px 11px;font-size:14px;border-radius:11px'>
+        <div class='qz-edit-grid'>
+          <input id='qzEditOpt0' placeholder='অপশন ১'>
+          <input id='qzEditOpt1' placeholder='অপশন ২'>
+          <input id='qzEditOpt2' placeholder='অপশন ৩'>
+          <input id='qzEditOpt3' placeholder='অপশন ৪'>
+        </div>
+      </div>
+
       <div class='chips grid2' id='qzSetupOpts'></div>
       <div style='display:flex;justify-content:space-between;margin-top:10px;gap:8px'>
         <button type='button' class='btn sm back' id='qzPrevBtn'>← আগের প্রশ্ন</button>
@@ -566,7 +608,14 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
       <div style='font-size:32px;font-weight:700;color:var(--r)' id='qzFinalScoreTxt'></div>
       <p id='qzFinalComment' style='color:#4c0519;font-weight:600'></p>
     </div>
-    <div style='font-weight:700;font-size:14px;color:var(--r);text-align:left;margin-top:12px'>🏆 লাইভ লিডারবোর্ড:</div>
+    <div class='card-preview-wrap'>
+      <canvas id='qzCertCanvas' width='800' height='600'></canvas>
+    </div>
+    <button type='button' class='btn outline full' id='dlQzCert' style='margin-bottom:8px'>🥇 সার্টিফিকেট কার্ড ডাউনলোড করো (PNG)</button>
+    <div style='display:flex;justify-content:space-between;align-items:center;margin-top:12px'>
+      <span style='font-weight:700;font-size:14px;color:var(--r)'>🏆 লাইভ লিডারবোর্ড:</span>
+      <span style='font-size:11.5px;color:var(--mute)'>👀 নামের ওপর ক্লিক করে উত্তর দেখো</span>
+    </div>
     <div class='lb-list' id='qzResultLb'></div>
     <div style='margin-top:14px'>
       <a href='/' class='btn full' style='display:block;text-decoration:none'>নিজের কুইজ লিংক বানাও ✨</a>
@@ -634,6 +683,26 @@ input:focus,textarea:focus{outline:0;border-color:var(--r);box-shadow:0 0 0 3px 
       <button type='button' class='btn sm outline' id='bdayTapBtn'>💨 ট্যাপ করে ফুঁ দাও</button>
     </div>
     <p class='small' id='bdayMicStatus'>মাইক্রোফোন অন করে জোরে ফুঁ দাও অথবা কেকের ওপর ট্যাপ করো!</p>
+  </div>
+
+  <!-- Step 2: Pop 3 Balloons & Gift Boxes to Unlock Final Birthday Card -->
+  <div class='balloon-stage' id='bdayBalloonStage' hidden>
+    <div style='font-weight:700;font-size:15px;color:var(--r)' id='bdayPopStatus'>🎈 ৩টি বেলুন ও গিফট বক্স ট্যাপ করে ফাটাও! (০ / ৩)</div>
+    <p class='small' style='margin:4px 0 0'>সবগুলো ফাটালেই জন্মদিনের সিক্রেট কার্ড আনলক হবে!</p>
+    <div class='balloon-row'>
+      <button type='button' class='balloon-btn' id='bPop1' data-bidx='0'>
+        <span class='b-ico' id='bIco1'>🎈</span>
+        <span class='b-lbl' id='bLbl1'>ট্যাপ করো</span>
+      </button>
+      <button type='button' class='balloon-btn' id='bPop2' data-bidx='1'>
+        <span class='b-ico' id='bIco2'>🎁</span>
+        <span class='b-lbl' id='bLbl2'>গিফট বক্স</span>
+      </button>
+      <button type='button' class='balloon-btn' id='bPop3' data-bidx='2'>
+        <span class='b-ico' id='bIco3'>🎊</span>
+        <span class='b-lbl' id='bLbl3'>ট্যাপ করো</span>
+      </button>
+    </div>
   </div>
 
   <div id='bdayUnlocked' hidden>
@@ -746,39 +815,79 @@ $('advToggle').onclick=()=>{
   $('advArrow').textContent=open?'▲':'▼';
 };
 
-// ---------- Quiz Bank & Setup State ----------
-const quizBank=[
+// ---------- Quiz Bank & Custom Question Editor State ----------
+const defaultQuizBank=[
   {q:'আমার সবচেয়ে প্রিয় খাবার কোনটি?',opts:['🍛 বিরিয়ানি / কাচ্চি','🍕 ফাস্টফুড (পিৎজা/বার্গার)','🥟 ফুচকা ও চটপটি','🍦 আইসক্রিম / মিষ্টি']},
   {q:'অবসর সময়ে আমি কী করতে সবচেয়ে ভালোবাসি?',opts:['😴 লম্বা ঘুম দিতে','🎬 মুভি বা সিরিজ দেখতে','🎧 গান শুনতে','📱 ফোনে আড্ডা দিতে']},
   {q:'আমি রেগে গেলে সাধারণত কী করি?',opts:['🤫 একদম চুপ হয়ে যাই','😤 কথা বলা বন্ধ করে দিই','🍕 খাওয়া-দাওয়া করি','😴 ঘুমিয়ে পড়ি']},
   {q:'আমার স্বপ্নের ঘুরতে যাওয়ার জায়গা কোনটি?',opts:['🌊 কক্সবাজার সমুদ্র','⛰️ পাহাড় ও মেঘ (সাজেক/সিলেট)','🌧️ বৃষ্টির দিনে নির্জন রাস্তা','☕ প্রিয় মানুষের সাথে ক্যাফে']},
   {q:'আমার কাছে সবচেয়ে বেশি গুরুত্বপূর্ণ কোনটি?',opts:['💖 সত্যিকারের ভালোবাসা','🤝 বিশ্বস্ত বন্ধুত্ব','🏡 পরিবার','✨ মানসিক শান্তি']}
 ];
+let customQuizBank=defaultQuizBank.map(x=>({q:x.q,opts:[...x.opts]}));
 let quizAnswers=[0,0,0,0,0];
 let qzSetupIdx=0;
 
-function renderQuizSetupStep(){
-  const item=quizBank[qzSetupIdx];
+function syncQuizEditorInputs(){
+  const item=customQuizBank[qzSetupIdx];
+  $('qzEditQInput').value=item.q;
+  [0,1,2,3].forEach(i=>{$('qzEditOpt'+i).value=item.opts[i]||''});
+}
+
+function renderQuizSetupStep(skipInputSync=false){
+  const item=customQuizBank[qzSetupIdx];
   $('qzStepLbl').textContent='প্রশ্ন '+toBnDigits(qzSetupIdx+1)+' / ৫';
   $('qzSetupQ').textContent=item.q;
+  if(!skipInputSync)syncQuizEditorInputs();
   const box=$('qzSetupOpts');
   box.innerHTML='';
   item.opts.forEach((opt,i)=>{
     const b=document.createElement('button');
     b.type='button';
     b.className='chip'+(quizAnswers[qzSetupIdx]===i?' on':'');
-    b.textContent=opt;
+    b.textContent=opt||('অপশন '+toBnDigits(i+1));
     b.onclick=()=>{
       haptic(15);
       quizAnswers[qzSetupIdx]=i;
-      renderQuizSetupStep();
-      if(qzSetupIdx<4)setTimeout(()=>{qzSetupIdx++;renderQuizSetupStep()},220);
+      renderQuizSetupStep(true);
+      if(qzSetupIdx<4 && $('qzEditBox').hidden){
+        setTimeout(()=>{qzSetupIdx++;renderQuizSetupStep()},220);
+      }
     };
     box.appendChild(b);
   });
   $('qzPrevBtn').disabled=(qzSetupIdx===0);
   $('qzNextBtn').disabled=(qzSetupIdx===4);
 }
+
+$('qzEditToggle').onclick=()=>{
+  haptic(15);
+  const open=$('qzEditBox').hidden;
+  $('qzEditBox').hidden=!open;
+  $('qzEditToggle').textContent=open?'✓ এডিট সম্পন্ন':'✍️ প্রশ্ন/অপশন বদলাও';
+  if(open)syncQuizEditorInputs();
+};
+
+$('qzEditQInput').oninput=()=>{
+  customQuizBank[qzSetupIdx].q=$('qzEditQInput').value.trim()||defaultQuizBank[qzSetupIdx].q;
+  renderQuizSetupStep(true);
+};
+[0,1,2,3].forEach(i=>{
+  $('qzEditOpt'+i).oninput=()=>{
+    customQuizBank[qzSetupIdx].opts[i]=$('qzEditOpt'+i).value.trim()||defaultQuizBank[qzSetupIdx].opts[i];
+    renderQuizSetupStep(true);
+  };
+});
+
+$('qzResetDefaultBtn').onclick=()=>{
+  haptic(15);
+  customQuizBank[qzSetupIdx]={
+    q:defaultQuizBank[qzSetupIdx].q,
+    opts:[...defaultQuizBank[qzSetupIdx].opts]
+  };
+  renderQuizSetupStep();
+  showToast('ডিফল্ট প্রশ্ন ফিরিয়ে আনা হয়েছে ↺');
+};
+
 $('qzPrevBtn').onclick=()=>{if(qzSetupIdx>0){haptic(15);qzSetupIdx--;renderQuizSetupStep()}};
 $('qzNextBtn').onclick=()=>{if(qzSetupIdx<4){haptic(15);qzSetupIdx++;renderQuizSetupStep()}};
 renderQuizSetupStep();
@@ -1132,6 +1241,74 @@ function updateQrCode(urlStr){
   };
 }
 
+// ---------- Shared Quiz Leaderboard & Detailed Answer Log Modal ----------
+let activeQuizLogState={entries:[],questions:defaultQuizBank,answers:[0,0,0,0,0]};
+
+function getQuizQuestions(rec){
+  if(rec&&rec.payload&&Array.isArray(rec.payload.questions)&&rec.payload.questions.length===5){
+    return rec.payload.questions;
+  }
+  return defaultQuizBank;
+}
+
+function getQuizBadgeTag(score){
+  if(score>=5)return '🥇 কলিজার বন্ধু';
+  if(score===4)return '💖 খাঁটি বন্ধু';
+  if(score>=2)return '😅 মোটামুটি চেনো';
+  return '🐸 নকল বন্ধু';
+}
+
+function renderQuizLeaderboardHtml(entries,questions,answers){
+  const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
+  activeQuizLogState={entries:sorted,questions:questions||defaultQuizBank,answers:answers||[0,0,0,0,0]};
+  return sorted.map((e,i)=>{
+    const s=Number(e.score||0);
+    const hasPicks=Array.isArray(e.picks)&&e.picks.length>0;
+    return `<div class="lb-item clickable" onclick="showQuizAnswerLog(${i})">
+      <div>
+        <div>${toBnDigits(i+1)}. <b>${e.name||'বন্ধু'}</b> <small style="color:#9f4a5e">(${getQuizBadgeTag(s)})</small></div>
+        <div style="font-size:11.5px;color:#e11d48;margin-top:2px">${hasPicks?'👀 কোন প্রশ্নে কী উত্তর দিয়েছে দেখো →':'স্কোর কার্ড'}</div>
+      </div>
+      <span class="badge">${toBnDigits(s)} / ৫</span>
+    </div>`;
+  }).join('');
+}
+
+window.showQuizAnswerLog=(idx)=>{
+  haptic(18);
+  const e=activeQuizLogState.entries[idx];
+  if(!e)return;
+  const qs=activeQuizLogState.questions||defaultQuizBank;
+  const ans=activeQuizLogState.answers||[0,0,0,0,0];
+  const picks=Array.isArray(e.picks)?e.picks:[];
+
+  let bodyHtml='';
+  if(!picks.length){
+    bodyHtml='<p style="color:#9f4a5e;margin:12px 0">এই বন্ধুর বিস্তারিত উত্তর লগ সংরক্ষিত নেই।</p>';
+  }else{
+    bodyHtml='<div class="ans-log-list">'+qs.map((qObj,qIdx)=>{
+      const pIdx=picks[qIdx];
+      const rIdx=Number(ans[qIdx]||0);
+      const pickedTxt=(pIdx!==undefined && qObj.opts[pIdx])?qObj.opts[pIdx]:'উত্তর দেয়নি';
+      const rightTxt=qObj.opts[rIdx]||'';
+      const isOk=(pIdx===rIdx);
+      return `<div class="ans-log-item" style="border-color:${isOk?'#86efac':'#fda4af'};background:${isOk?'#f0fdf4':'#fff1f2'}">
+        <div style="font-weight:700;margin-bottom:3px">${toBnDigits(qIdx+1)}. ${qObj.q}</div>
+        <div style="color:${isOk?'#15803d':'#be123c'};font-weight:600">${isOk?'✅':'❌'} তার উত্তর: ${pickedTxt}</div>
+        ${!isOk?`<div style="color:#15803d;font-size:12.5px;margin-top:2px">✔ সঠিক উত্তর: <b>${rightTxt}</b></div>`:''}
+      </div>`;
+    }).join('')+'</div>';
+  }
+
+  openModal(
+    `<h2>👀 ${e.name||'বন্ধু'}-এর উত্তরসমূহ (${toBnDigits(e.score||0)}/৫)</h2>`+
+    `<div style="margin-bottom:6px"><span class="badge">${getQuizBadgeTag(Number(e.score||0))}</span></div>`+
+    bodyHtml+
+    `<div class="mbtns"><button type="button" class="btn sm full" id="closeLogBtn">বন্ধ করো</button></div>`
+  );
+  $('closeLogBtn').onclick=closeModal;
+};
+
 let trackerCdInterval=null;
 function renderTrackerStatus(rec){
   if(!rec)return;
@@ -1145,10 +1322,9 @@ function renderTrackerStatus(rec){
       $('gStatusText').innerHTML='<p class="small">এখনো কেউ কুইজটি খেলেনি। লিংকটি বন্ধুদের পাঠিয়ে দাও!</p>';
       return;
     }
-    const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
-    $('gStatusText').innerHTML='<div class="lb-list">'+sorted.map((e,i)=>
-      `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name||'বন্ধু'}</span><span class="badge">${toBnDigits(e.score||0)} / ৫</span></div>`
-    ).join('')+'</div>';
+    const qs=getQuizQuestions(rec);
+    const ans=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:[0,0,0,0,0];
+    $('gStatusText').innerHTML='<div style="font-size:12px;color:var(--mute);margin-bottom:6px">💡 যেকোনো বন্ধুর নামের ওপর ট্যাপ করে সে কোন প্রশ্নে কী উত্তর দিয়েছে দেখো:</div><div class="lb-list">'+renderQuizLeaderboardHtml(entries,qs,ans)+'</div>';
     return;
   }
 
@@ -1366,27 +1542,115 @@ $('admLogout').onclick=()=>{
   show('adminLock');
 };
 
+// ---------- Quiz Certificate Card Generator (Canvas) ----------
+function drawQuizCertificate({playerName,creatorName,score}){
+  const canvas=$('qzCertCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+
+  let gradColors=['#fff1f2','#fecdd3','#fbcfe8'];
+  let badgeEmoji='🥇';
+  let certTitle='কলিজার বন্ধু সার্টিফিকেট';
+  let certSub='১০০% খাঁটি ও আসল বন্ধু প্রমাণিত!';
+  let accent='#e11d48';
+
+  if(score===4){
+    badgeEmoji='💖';
+    certTitle='খাঁটি বন্ধু সার্টিফিকেট';
+    certSub='প্রায় সব গোপন খবরই জানে দেখা যাচ্ছে!';
+    accent='#db2777';
+  }else if(score>=2){
+    badgeEmoji='😅';
+    certTitle='কাজচালানো বন্ধু সার্টিফিকেট';
+    certSub='অর্ধেক জানে আর অর্ধেক আন্দাজে ঢিল মেরেছে!';
+    accent='#d97706';
+    gradColors=['#fffbeb','#fef3c7','#fde68a'];
+  }else if(score<=1){
+    badgeEmoji='🐸';
+    certTitle='নকল বন্ধু সার্টিফিকেট';
+    certSub='নামে মাত্র বন্ধু! আসলে কিছুই চেনে না 😂';
+    accent='#be123c';
+  }
+
+  const grad=ctx.createLinearGradient(0,0,W,H);
+  grad.addColorStop(0,gradColors[0]);
+  grad.addColorStop(0.5,gradColors[1]);
+  grad.addColorStop(1,gradColors[2]);
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,W,H);
+
+  ctx.save();
+  ctx.shadowColor='rgba(225,29,72,0.16)';
+  ctx.shadowBlur=32;
+  ctx.fillStyle='#ffffff';
+  ctx.beginPath();
+  ctx.roundRect(36,36,W-72,H-72,28);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.strokeStyle=accent;
+  ctx.lineWidth=3.5;
+  ctx.setLineDash([10,8]);
+  ctx.beginPath();
+  ctx.roundRect(54,54,W-108,H-108,20);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.textAlign='center';
+  ctx.font='64px sans-serif';
+  ctx.fillText(badgeEmoji,W/2,140);
+
+  ctx.fillStyle=accent;
+  ctx.font='700 34px "Hind Siliguri", sans-serif';
+  ctx.fillText(certTitle,W/2,198);
+
+  ctx.fillStyle='#9f4a5e';
+  ctx.font='600 20px "Hind Siliguri", sans-serif';
+  ctx.fillText('এই মর্মে প্রত্যয়ন করা যাচ্ছে যে,',W/2,248);
+
+  ctx.fillStyle='#4c0519';
+  ctx.font='700 36px "Hind Siliguri", sans-serif';
+  ctx.fillText(playerName||'প্রিয় বন্ধু',W/2,300);
+
+  ctx.fillStyle='#ffe4e6';
+  ctx.beginPath();
+  ctx.roundRect(140,326,W-280,64,32);
+  ctx.fill();
+
+  ctx.fillStyle=accent;
+  ctx.font='700 26px "Hind Siliguri", sans-serif';
+  ctx.fillText(creatorName+'-কে চেনার পরীক্ষায় স্কোর: '+toBnDigits(score)+' / ৫',W/2,368);
+
+  ctx.fillStyle='#4c0519';
+  ctx.font='600 22px "Hind Siliguri", sans-serif';
+  ctx.fillText('“'+certSub+'”',W/2,440);
+
+  ctx.fillStyle='#9f4a5e';
+  ctx.font='600 18px "Hind Siliguri", sans-serif';
+  ctx.fillText('🏆 আমাদের গল্প কুইজ চ্যালেঞ্জ • hellojubayer.online',W/2,518);
+}
+
 // ---------- Mode 2: Quiz Player Logic ----------
 function initQuizRecipient(rec){
   show('quizPlayCard');
   const creator=rec.from_name||'তোমার বন্ধু';
   $('qzPlayTitle').textContent=creator+'-কে তুমি কতটুকু চেনো? 🏆';
+  const activeQuestions=getQuizQuestions(rec);
   const savedAnswers=(rec.payload&&Array.isArray(rec.payload.answers))?rec.payload.answers:[0,0,0,0,0];
   const entries=(rec.payload&&Array.isArray(rec.payload.entries))?rec.payload.entries:[];
 
   if(entries.length){
     $('qzPreLbWrap').hidden=false;
-    const sorted=[...entries].sort((a,b)=>(b.score||0)-(a.score||0));
-    $('qzPreLb').innerHTML=sorted.map((e,i)=>
-      `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name}</span><span class="badge">${toBnDigits(e.score)} / ৫</span></div>`
-    ).join('');
+    $('qzPreLb').innerHTML=renderQuizLeaderboardHtml(entries,activeQuestions,savedAnswers);
   }
 
   let playerName='';
   let curQ=0,score=0;
+  let playerPicks=[];
 
   function renderPlayQ(){
-    const item=quizBank[curQ];
+    const item=activeQuestions[curQ]||defaultQuizBank[curQ];
     $('qzPlayStep').textContent='প্রশ্ন '+toBnDigits(curQ+1)+' / ৫';
     $('qzPlayScore').textContent='স্কোর: '+toBnDigits(score);
     $('qzPlayBar').style.width=((curQ+1)*20)+'%';
@@ -1401,6 +1665,7 @@ function initQuizRecipient(rec){
       b.onclick=async()=>{
         haptic(20);
         box.querySelectorAll('.chip').forEach(x=>x.disabled=true);
+        playerPicks.push(idx);
         const rightIdx=Number(savedAnswers[curQ]||0);
         if(idx===rightIdx){
           b.classList.add('correct');
@@ -1419,17 +1684,26 @@ function initQuizRecipient(rec){
             $('qzGamePane').hidden=true;
             $('qzResultPane').hidden=false;
             burst();playCelebrationChime();
-            $('qzFinalScoreTxt').textContent=toBnDigits(score)+' / ৫ 🌟';
-            $('qzFinalComment').textContent=score>=4?'অসাধারণ! তুমি তো '+creator+'-কে একদম ভেতর থেকে চেনো! 💖':(score>=2?'বেশ ভালোই চেনো দেখা যাচ্ছে! 😊':'হায় হায়! আরেকটু চেনা দরকার ছিল 😂');
+            $('qzFinalScoreTxt').textContent=toBnDigits(score)+' / ৫ — '+getQuizBadgeTag(score);
+            $('qzFinalComment').textContent=score>=4?'অসাধারণ! তুমি তো '+creator+'-কে একদম ভেতর থেকে চেনো! 💖':(score>=2?'বেশ ভালোই চেনো দেখা যাচ্ছে! 😊':'হায় হায়! তুমি তো নকল বন্ধু বের হলে 😂');
+
+            drawQuizCertificate({playerName,creatorName:creator,score});
+            $('dlQzCert').onclick=()=>{
+              haptic(20);
+              const link=document.createElement('a');
+              link.download='friend-certificate-'+(playerName||'quiz')+'.png';
+              link.href=$('qzCertCanvas').toDataURL('image/png');
+              link.click();
+              showToast('সার্টিফিকেট কার্ড ডাউনলোড হয়েছে 🥇');
+            };
+
+            const newEntry={name:playerName,score,picks:playerPicks,time:new Date().toISOString()};
             const updated=await dbUpdateProposal(rec.id,{
               status:'confirmed',
-              append_entry:{name:playerName,score}
+              append_entry:newEntry
             });
-            const allEntries=(updated&&updated.payload&&Array.isArray(updated.payload.entries))?updated.payload.entries:[{name:playerName,score},...entries];
-            const sorted=[...allEntries].sort((a,b)=>(b.score||0)-(a.score||0));
-            $('qzResultLb').innerHTML=sorted.map((e,i)=>
-              `<div class="lb-item"><span>${toBnDigits(i+1)}. ${e.name}</span><span class="badge">${toBnDigits(e.score)} / ৫</span></div>`
-            ).join('');
+            const allEntries=(updated&&updated.payload&&Array.isArray(updated.payload.entries))?updated.payload.entries:[newEntry,...entries];
+            $('qzResultLb').innerHTML=renderQuizLeaderboardHtml(allEntries,activeQuestions,savedAnswers);
           }
         },850);
       };
@@ -1441,6 +1715,7 @@ function initQuizRecipient(rec){
     const n=$('qzPlayerName').value.trim();
     if(!n){shakeEl($('qzPlayerName'));showToast('তোমার নাম লিখো');return}
     playerName=n;
+    playerPicks=[];
     $('qzStartPane').hidden=true;
     $('qzGamePane').hidden=false;
     startMusic();
@@ -1501,7 +1776,7 @@ function initNglRecipient(rec){
   };
 }
 
-// ---------- Mode 4a: Interactive Birthday Cake Recipient Logic ----------
+// ---------- Mode 4a: Interactive Birthday Cake & Balloon/Gift Pop Logic ----------
 function initBirthdayRecipient(rec){
   show('bdayCard');
   const toN=rec.to_name||'প্রিয়জন';
@@ -1513,19 +1788,49 @@ function initBirthdayRecipient(rec){
 
   let blown=false;
   let micStream=null;
+  let poppedCount=0;
+  const popRewards=[
+    {ico:'🎉',lbl:'শুভ জন্মদিন!'},
+    {ico:'💖',lbl:'অনেক ভালোবাসা!'},
+    {ico:'✨',lbl:'স্বপ্ন পূরণ হোক!'}
+  ];
 
   function blowOutCandles(){
     if(blown)return;
     blown=true;
     if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null}
     ['fl1','fl2','fl3'].forEach(id=>$(id).classList.add('out'));
-    $('bdayTopEmoji').textContent='🥳';
-    $('bdaySub').textContent='ইয়েএএস! মোমবাতি নিভে গেছে! 🎉';
+    $('bdayTopEmoji').textContent='🎈';
+    $('bdaySub').textContent='ইয়েএএস! মোমবাতি নিভে গেছে! এবার বেলুন ও গিফট বক্স ফাটাও 🎉';
     $('bdayBlowControls').hidden=true;
-    $('bdayUnlocked').hidden=false;
+    $('bdayBalloonStage').hidden=false;
     burst();startMusic();playCelebrationChime();haptic([40,60,40]);
     dbUpdateProposal(rec.id,{status:'accepted'});
   }
+
+  [1,2,3].forEach((n,idx)=>{
+    const btn=$('bPop'+n);
+    btn.onclick=()=>{
+      if(btn.classList.contains('popped'))return;
+      btn.classList.add('popped');
+      poppedCount++;
+      haptic([30,40]);
+      playTone(587.33+(idx*110),0.3,0.09,'triangle');
+      $('bIco'+n).textContent=popRewards[idx].ico;
+      $('bLbl'+n).textContent=popRewards[idx].lbl;
+      $('bdayPopStatus').textContent='🎈 বেলুন ও গিফট বক্স ফাটানো হয়েছে: '+toBnDigits(poppedCount)+' / ৩';
+      if(poppedCount>=3){
+        setTimeout(()=>{
+          $('bdayTopEmoji').textContent='🥳';
+          $('bdaySub').textContent='সারপ্রাইজ আনলক হয়েছে! 💖';
+          $('bdayBalloonStage').hidden=true;
+          $('bdayUnlocked').hidden=false;
+          burst();playCelebrationChime();
+          showToast('শুভ জন্মদিন '+toN+'! 🎂🎉');
+        },450);
+      }
+    };
+  });
 
   $('cakeStage').onclick=blowOutCandles;
   $('bdayTapBtn').onclick=blowOutCandles;
@@ -1723,7 +2028,12 @@ async function init(){
       const record={
         id:newId,mode:'quiz',to_name:'বন্ধুরা',from_name:creator,
         question:creator+'-কে কতটুকু চেনো?',status:'created',theme:currentTheme,
-        payload:{answers:[...quizAnswers],entries:[]},created_at:new Date().toISOString()
+        payload:{
+          questions:customQuizBank.map(x=>({q:x.q,opts:[...x.opts]})),
+          answers:[...quizAnswers],
+          entries:[]
+        },
+        created_at:new Date().toISOString()
       };
       await dbSaveProposal(record);
       $('qzMake').disabled=false;
